@@ -1,54 +1,23 @@
 package com.example.blackmusicroom;
 
+import android.content.Intent;
+
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager2.widget.ViewPager2;
+
+import com.example.blackmusicroom.view.screen.SettingsActivity;
 
 public class NavigatorImpl implements Navigator{
 
     private static NavigatorImpl instance;
     private ViewPager2 navigator;
+    private AppCompatActivity activity;
 
     @Override
-    public void setSongsPage() {
+    public void setPage(int numPage) {
         if(navigator!=null){
             navigator.setCurrentItem(0);
         }
     }
 
-    @Override
-    public void setPlaylistsPage() {
-        if(navigator!=null){
-            navigator.setCurrentItem(1);
-        }
-    }
-
-    @Override
-    public void setPlaylistSongsPage() {
-        if(navigator!=null){
-            navigator.setCurrentItem(2);
-        }
-    }
-
-    @Override
-    public void setPlayerPage() {
-        if(navigator!=null){
-            navigator.setCurrentItem(3);
-        }
-    }
-
-    @Override
-    public void setSettings() {
-
-    }
-
-    @Override
-    public void setViewPager(ViewPager2 navigator) {
-        this.navigator = navigator;
-    }
-
-    public static NavigatorImpl getInstance(){
-        if(instance==null){
-            instance = new NavigatorImpl();
-        }
-        return instance;
-    }
 }

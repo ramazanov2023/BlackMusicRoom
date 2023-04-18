@@ -14,7 +14,7 @@ import com.example.blackmusicroom.Navigator;
 import com.example.blackmusicroom.R;
 
 public class PlayerPageFragment extends Fragment {
-    Button btnSongs,btnPlaylists,btnPlaylistSongs,btnPlayer;
+    Button btnSongs,btnPlaylists,btnPlaylistSongs,btnPlayer,btnSettings;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -27,30 +27,38 @@ public class PlayerPageFragment extends Fragment {
         btnPlaylists = view.findViewById(R.id.page_playlists);
         btnPlaylistSongs = view.findViewById(R.id.page_playlist_songs);
         btnPlayer = view.findViewById(R.id.page_player);
+        btnSettings = view.findViewById(R.id.page_settings);
+
+        Navigator navigator =(Navigator) getActivity();
 
         btnSongs.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Navigator.getNavigator().setSongsPage();
+                navigator.setPage(Navigator.SONGS_PAGE);
             }
         });
-
         btnPlaylists.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Navigator.getNavigator().setPlaylistsPage();
+                navigator.setPage(Navigator.PLAYLISTS_PAGE);
             }
         });
         btnPlaylistSongs.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Navigator.getNavigator().setPlaylistSongsPage();
+                navigator.setPage(Navigator.PLAYLIST_SONGS_PAGE);
             }
         });
         btnPlayer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Navigator.getNavigator().setPlayerPage();
+                navigator.setPage(Navigator.PLAYER_PAGE);
+            }
+        });
+        btnSettings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                navigator.setPage(Navigator.SETTINGS_PAGE);
             }
         });
     }
