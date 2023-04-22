@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">BlackMusicRoom</string>
+    <string name="sample_example_title">Don\'t Brake My Heart</string>
+    <string name="sample_example_artist">LauraFabian</string>
 </resources>

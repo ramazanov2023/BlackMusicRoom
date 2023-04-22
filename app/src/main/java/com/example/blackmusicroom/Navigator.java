@@ -11,21 +11,6 @@ public interface Navigator {
     int PLAYER_PAGE = 3;
     int SETTINGS_PAGE = 4;
 
-
     void setPage(int numPage);
 
-//    void setPlaylistsPage();
-//
-//    void setPlaylistSongsPage();
-//
-//    void setPlayerPage();
-//
-//    void setSettingsPage();
-//
-//    void setViewPager(ViewPager2 navigator);
-//
-////    static Navigator getNavigator(){
-////        Navigator navigator = NavigatorImpl.getInstance();
-////        return navigator;
-////    }
 }

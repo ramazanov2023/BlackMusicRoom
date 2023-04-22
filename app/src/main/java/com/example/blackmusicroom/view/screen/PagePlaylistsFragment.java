@@ -13,12 +13,12 @@ import androidx.fragment.app.Fragment;
 import com.example.blackmusicroom.Navigator;
 import com.example.blackmusicroom.R;
 
-public class SongsPageFragment extends Fragment {
+public class PagePlaylistsFragment extends Fragment {
     Button btnSongs,btnPlaylists,btnPlaylistSongs,btnPlayer,btnSettings;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_songs_page,container,false);
+        return inflater.inflate(R.layout.fragment_playlists_page,container,false);
     }
 
     @Override

@@ -1,25 +1,34 @@
 package com.example.blackmusicroom;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.widget.Toast;
 
-import com.example.blackmusicroom.view.screen.PlayerPageFragment;
-import com.example.blackmusicroom.view.screen.PlaylistSongsPageFragment;
-import com.example.blackmusicroom.view.screen.PlaylistsPageFragment;
+import com.example.blackmusicroom.model.repository.AllSongsDB;
+import com.example.blackmusicroom.model.repository.AllSongsDBImpl;
+import com.example.blackmusicroom.view.screen.PagePlayerFragment;
+import com.example.blackmusicroom.view.screen.PagePlaylistSongsFragment;
+import com.example.blackmusicroom.view.screen.PagePlaylistsFragment;
 import com.example.blackmusicroom.view.screen.SettingsActivity;
-import com.example.blackmusicroom.view.screen.SongsPageFragment;
-
+import com.example.blackmusicroom.view.screen.PageSongsFragment;
+import com.example.blackmusicroom.viewmodel.Player;
+import com.example.blackmusicroom.viewmodel.PlayerImpl;
 
 
 public class MainActivity extends FragmentActivity implements Navigator {
     ViewPager2 viewPager2;
     FragmentStateAdapter adapter;
+    AllSongsDB songs;
 
 
 
@@ -28,10 +37,28 @@ public class MainActivity extends FragmentActivity implements Navigator {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        viewPager2 = findViewById(R.id.view_pager_2);
 
+        songs = AllSongsDBImpl.getInstance();
+        songs.loadSongs(getApplicationContext());
+
+//        Player player = PlayerImpl.getInstance();
+//        player.initPlayer();
+//        Player.getInstance().initPlayer();
+
+        viewPager2 = findViewById(R.id.view_pager_2);
         adapter = new PagerFragmentAdapter(this);
         viewPager2.setAdapter(adapter);
+
+//        AllSongsDB songs = AllSongsDBImpl.getInstance();
+//        songs.loadSongs(getApplicationContext());
+
+        Player player = PlayerImpl.getInstance();
+        player.initPlayer();
+
+        if (!checkPermission()) {
+            requestPermission();
+        }
+
     }
 
     @Override
@@ -66,13 +93,13 @@ public class MainActivity extends FragmentActivity implements Navigator {
         public Fragment createFragment(int position) {
             switch (position) {
                 case 0:
-                    return new SongsPageFragment();
+                    return new PageSongsFragment();
                 case 1:
-                    return new PlaylistsPageFragment();
+                    return new PagePlaylistsFragment();
                 case 2:
-                    return new PlaylistSongsPageFragment();
+                    return new PagePlaylistSongsFragment();
                 case 3:
-                    return new PlayerPageFragment();
+                    return new PagePlayerFragment();
             }
 
             return null;
@@ -99,9 +126,32 @@ public class MainActivity extends FragmentActivity implements Navigator {
 //    PhantomReference phantom = new PhantomReference(strong);
 //    strong = null;
 
-    public class StrongR {
-
+    public boolean checkPermission() {
+        int result = ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE);
+        if (result == PackageManager.PERMISSION_GRANTED) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
+    public void requestPermission() {
+        if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
+            Toast.makeText(this, "READ PERMISSION ID REQUIRED, PLEASE ALLOW FROM SETTINGS", Toast.LENGTH_SHORT).show();
+        } else {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 123);
+        }
+    }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case 123:
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+//                    AllSongsDB songs = AllSongsDBImpl.getInstance();
+                    songs.loadSongs(getApplicationContext());
+                }
+        }
+    }
 }

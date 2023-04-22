@@ -14,7 +14,7 @@ import androidx.fragment.app.Fragment;
 import com.example.blackmusicroom.Navigator;
 import com.example.blackmusicroom.R;
 
-public class PlaylistSongsPageFragment extends Fragment {
+public class PagePlaylistSongsFragment extends Fragment {
     Button btnSongs,btnPlaylists,btnPlaylistSongs,btnPlayer,btnSettings;
     @Nullable
     @Override
