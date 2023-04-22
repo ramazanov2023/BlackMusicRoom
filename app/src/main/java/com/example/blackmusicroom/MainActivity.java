@@ -38,8 +38,8 @@ public class MainActivity extends FragmentActivity implements Navigator {
         setContentView(R.layout.activity_main);
 
 
-        songs = AllSongsDBImpl.getInstance();
-        songs.loadSongs(getApplicationContext());
+//        songs = AllSongsDBImpl.getInstance();
+//        songs.loadSongs(getApplicationContext());
 
 //        Player player = PlayerImpl.getInstance();
 //        player.initPlayer();
@@ -150,7 +150,8 @@ public class MainActivity extends FragmentActivity implements Navigator {
             case 123:
                 if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 //                    AllSongsDB songs = AllSongsDBImpl.getInstance();
-                    songs.loadSongs(getApplicationContext());
+//                    songs.loadSongs(getApplicationContext());
+                    viewPager2.setAdapter(new PagerFragmentAdapter(this));
                 }
         }
     }

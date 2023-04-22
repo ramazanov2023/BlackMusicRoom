@@ -1,108 +1,65 @@
 package com.example.blackmusicroom.viewmodel;
 
+import android.app.Application;
 import android.content.Context;
 import android.database.Cursor;
 import android.provider.MediaStore;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.ViewModel;
 
 import com.example.blackmusicroom.data.Song;
 import com.example.blackmusicroom.model.repository.AllSongsDB;
+import com.example.blackmusicroom.model.repository.AllSongsDBImpl;
+import com.example.blackmusicroom.model.repository.MyCallback;
 
 import java.util.ArrayList;
 
-public class PageSongsViewModel implements AllSongsDB {
-    private ArrayList<Song> songs;
+public class PageSongsViewModel extends AndroidViewModel {
+//    private ArrayList<Song> songs;
     private MutableLiveData<ArrayList<Song>> liveData;
     private static PageSongsViewModel instance;
 
-    public static PageSongsViewModel getInstance(){
-        if(instance==null){
-            instance = new PageSongsViewModel();
-        }
-        return instance;
+    public PageSongsViewModel(@NonNull Application application) {
+        super(application);
     }
 
-    @Override
-    public void loadSongs(Context context) {
+//    public static PageSongsViewModel getInstance(){
+//        if(instance==null){
+//            instance = new PageSongsViewModel();
+//        }
+//        return instance;
+//    }
+
+
+    public LiveData<ArrayList<Song>> getSongs() {
+        Log.e("challenge","4 - getSongs");
         if(liveData==null){
             liveData = new MutableLiveData<>();
-            songs = new ArrayList<>();
+            Log.e("challenge","5 - if(liveData==null)");
+            loadSongs();
         }
-
-
-        String sortOrder = null;
-        String[] projection = {
-                MediaStore.Audio.Media._ID,
-                MediaStore.Audio.Media.DATA,
-                MediaStore.Audio.Media.TITLE,
-                MediaStore.Audio.Media.ARTIST,
-                MediaStore.Audio.Media.ALBUM,
-                MediaStore.Audio.Media.DATE_ADDED,
-                MediaStore.Audio.Media.DURATION,
-                MediaStore.Audio.Media.SIZE
-        };
-
-        String selection = MediaStore.Audio.Media.IS_MUSIC + "!=0";
-
-//        switch (idSort) {
-//            case 0:
-//                sortOrder = MediaStore.Audio.Media.TITLE;
-//                break;
-//            case 1:
-//                sortOrder = MediaStore.Audio.Media.ARTIST;
-//                break;
-//            case 2:
-//                sortOrder = MediaStore.Audio.Media.ALBUM;
-//                break;
-//            case 3:
-//                sortOrder = MediaStore.Audio.Media.COMPOSER;
-//                break;
-//            case 4:
-//                sortOrder = MediaStore.Audio.Media.YEAR;
-//                break;
-//            case 5:
-//                sortOrder = MediaStore.Audio.Media.DATE_ADDED;
-//                break;
-//            case 6:
-//                sortOrder = MediaStore.Audio.Media.DURATION;
-//                break;
-//            case 7:
-//                sortOrder = MediaStore.Audio.Media.SIZE;
-//                break;
-//            default:
-//                sortOrder = "title";
-//        }
-
-        Cursor cursor = context.getContentResolver().query(
-                MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
-                projection,
-                selection,
-                null,
-                sortOrder);
-
-        while (cursor.moveToNext()) {
-            Song singleSong = new Song(
-                    cursor.getInt(0),
-                    cursor.getString(1),
-                    cursor.getString(2),
-                    cursor.getString(3),
-                    cursor.getString(4),
-                    cursor.getString(5),
-                    cursor.getString(6),
-                    cursor.getString(7));
-            songs.add(singleSong);
-        }
-        Log.e("challenge","2 - updatePlayer");
-//        PlayerObserver.updatePlayer();
-
-        liveData.setValue(songs);
-    }
-
-    @Override
-    public LiveData<ArrayList<Song>> getSongs() {
         return liveData;
     }
+
+    private void loadSongs(){
+        Log.e("challenge","6 - loadSongs");
+        AllSongsDB allSongsDB = AllSongsDBImpl.getInstance();
+        allSongsDB.loadSongs(getApplication(), new MyCallback() {
+            @Override
+            public void onLoad(ArrayList<Song> songs) {
+                Log.e("challenge","10 - onLoad " + songs.size());
+                liveData.postValue(songs);
+            }
+        });
+    }
+
+//
+//    public LiveData<ArrayList<Song>> getSongs() {
+//        return liveData;
+//    }
 }

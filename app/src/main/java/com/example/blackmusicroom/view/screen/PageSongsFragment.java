@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -18,6 +19,7 @@ import com.example.blackmusicroom.data.Song;
 import com.example.blackmusicroom.model.repository.AllSongsDB;
 import com.example.blackmusicroom.model.repository.AllSongsDBImpl;
 import com.example.blackmusicroom.view.adapter.PageSongsAdapter;
+import com.example.blackmusicroom.viewmodel.PageSongsViewModel;
 
 import java.util.ArrayList;
 
@@ -40,12 +42,15 @@ public class PageSongsFragment extends Fragment{
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setAdapter(adapter);
 
+        Log.e("challenge","2 - setAdapter");
 
-        AllSongsDB songs = AllSongsDBImpl.getInstance();
-        songs.getSongs().observe(getViewLifecycleOwner(), new Observer<ArrayList<Song>>() {
+        PageSongsViewModel viewModel = ViewModelProviders.of(this).get(PageSongsViewModel.class);
+//        AllSongsDB songs = AllSongsDBImpl.getInstance();
+        Log.e("challenge","3 - viewModel");
+        viewModel.getSongs().observe(getViewLifecycleOwner(), new Observer<ArrayList<Song>>() {
             @Override
             public void onChanged(ArrayList<Song> songs) {
-                Log.e("observe","1 - onChanged");
+                Log.e("challenge","4 - onChanged");
                 recyclerView.swapAdapter(new PageSongsAdapter(getActivity(),songs),true);
 //                adapter.setSongs(songs);
             }

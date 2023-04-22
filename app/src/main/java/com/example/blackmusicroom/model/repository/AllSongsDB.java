@@ -10,6 +10,5 @@ import com.example.blackmusicroom.data.Song;
 import java.util.ArrayList;
 
 public interface AllSongsDB {
-    void loadSongs(Context context);
-    LiveData<ArrayList<Song>> getSongs();
+    void loadSongs(Context context,MyCallback myCallback);
 }
