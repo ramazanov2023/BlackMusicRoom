@@ -2,4 +2,6 @@
     <string name="app_name">BlackMusicRoom</string>
     <string name="sample_example_title">Don\'t Brake My Heart</string>
     <string name="sample_example_artist">LauraFabian</string>
+    <string name="example_name_playlist">BlackMusic</string>
+    <string name="new_player">New</string>
 </resources>

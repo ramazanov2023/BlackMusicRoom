@@ -15,8 +15,6 @@ import java.util.ArrayList;
 import javax.security.auth.callback.Callback;
 
 public class AllSongsDBImpl implements AllSongsDB {
-//    private ArrayList<Song> songs;
-//    private MutableLiveData<ArrayList<Song>> liveData;
     private static AllSongsDBImpl instance;
 
     public static AllSongsDBImpl getInstance(){
@@ -28,13 +26,11 @@ public class AllSongsDBImpl implements AllSongsDB {
 
     @Override
     public void loadSongs(Context context,MyCallback myCallback) {
-        Log.e("challenge","7 - loadSongs");
         ArrayList<Song> songs = new ArrayList<>();
 
         new Thread(new Runnable() {
             @Override
             public void run() {
-                Log.e("challenge","8 - run");
                 String sortOrder = null;
                 String[] projection = {
                         MediaStore.Audio.Media._ID,

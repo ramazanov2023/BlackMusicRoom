@@ -25,7 +25,6 @@ import java.util.ArrayList;
 
 public class PageSongsFragment extends Fragment{
     RecyclerView recyclerView;
-    PageSongsAdapter adapter;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -35,24 +34,15 @@ public class PageSongsFragment extends Fragment{
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         recyclerView = view.findViewById(R.id.page_songs_recycler_view);
-        Log.e("challenge","1 - registerObserver");
-
-        adapter = new PageSongsAdapter(getActivity(), new ArrayList<>());
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        recyclerView.setAdapter(adapter);
-
-        Log.e("challenge","2 - setAdapter");
+        recyclerView.setAdapter(new PageSongsAdapter(getActivity(), new ArrayList<>()));
 
         PageSongsViewModel viewModel = ViewModelProviders.of(this).get(PageSongsViewModel.class);
-//        AllSongsDB songs = AllSongsDBImpl.getInstance();
-        Log.e("challenge","3 - viewModel");
         viewModel.getSongs().observe(getViewLifecycleOwner(), new Observer<ArrayList<Song>>() {
             @Override
             public void onChanged(ArrayList<Song> songs) {
-                Log.e("challenge","4 - onChanged");
                 recyclerView.swapAdapter(new PageSongsAdapter(getActivity(),songs),true);
-//                adapter.setSongs(songs);
             }
         });
     }

@@ -28,7 +28,6 @@ import com.example.blackmusicroom.viewmodel.PlayerImpl;
 public class MainActivity extends FragmentActivity implements Navigator {
     ViewPager2 viewPager2;
     FragmentStateAdapter adapter;
-    AllSongsDB songs;
 
 
 
@@ -37,20 +36,9 @@ public class MainActivity extends FragmentActivity implements Navigator {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
-//        songs = AllSongsDBImpl.getInstance();
-//        songs.loadSongs(getApplicationContext());
-
-//        Player player = PlayerImpl.getInstance();
-//        player.initPlayer();
-//        Player.getInstance().initPlayer();
-
         viewPager2 = findViewById(R.id.view_pager_2);
         adapter = new PagerFragmentAdapter(this);
         viewPager2.setAdapter(adapter);
-
-//        AllSongsDB songs = AllSongsDBImpl.getInstance();
-//        songs.loadSongs(getApplicationContext());
 
         Player player = PlayerImpl.getInstance();
         player.initPlayer();
@@ -58,7 +46,6 @@ public class MainActivity extends FragmentActivity implements Navigator {
         if (!checkPermission()) {
             requestPermission();
         }
-
     }
 
     @Override
@@ -149,8 +136,6 @@ public class MainActivity extends FragmentActivity implements Navigator {
         switch (requestCode) {
             case 123:
                 if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-//                    AllSongsDB songs = AllSongsDBImpl.getInstance();
-//                    songs.loadSongs(getApplicationContext());
                     viewPager2.setAdapter(new PagerFragmentAdapter(this));
                 }
         }
