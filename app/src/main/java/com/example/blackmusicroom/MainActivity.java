@@ -48,6 +48,8 @@ public class MainActivity extends FragmentActivity implements Navigator {
         }
     }
 
+
+
     @Override
     public void setPage(int numPage) {
         switch (numPage) {

@@ -11,5 +11,6 @@ import java.util.ArrayList;
 public interface PlaylistControl {
     LiveData<ArrayList<Playlist>> getPlaylists(Context context);
 
-    void createPlaylist(Context context, String playlistName);
+    boolean createPlaylist(Context context, String playlistName);
+    void deletePlaylist(Context context, String playlistName,int playlistId);
 }

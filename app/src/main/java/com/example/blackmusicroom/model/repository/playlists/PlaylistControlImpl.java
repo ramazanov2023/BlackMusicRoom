@@ -34,18 +34,61 @@ public class PlaylistControlImpl implements PlaylistControl {
         return liveData;
     }
 
+
+    private boolean validate(SQLiteDatabase database, String playlistName) {
+        String table = "SELECT COUNT(*) FROM sqlite_master WHERE type=? AND name=?";
+        Cursor cursor = database.rawQuery(table,new String[]{"table",playlistName});
+        cursor.moveToFirst();
+        return cursor.getInt(0) > 0;
+    }
+
     @Override
-    public void createPlaylist(Context context, String playlistName) {
+    public boolean createPlaylist(Context context, String playlistName) {
+        SQLHelper helper = new SQLHelper(context);
+
+        SQLiteDatabase database = helper.getWritableDatabase();
+
+        boolean tableAlreadyExists = validate(database,playlistName);
+
+        if(tableAlreadyExists){
+            return true;
+        }else{
+            PlaylistUser playlistUser = new PlaylistUserImpl();
+            playlistUser.createPlaylistUser(database,playlistName);
+
+            ContentValues values = new ContentValues();
+            values.put(ContractPlaylistControl.PLAYLIST_NAME,playlistName);
+            values.put(ContractPlaylistControl.PLAYLIST_COUNT_SONGS,0);
+
+            database.insert(ContractPlaylistControl.PLAYLIST_TABLE_NAME, null,values);
+
+            loadPlaylists(context);
+            return false;
+        }
+
+//        PlaylistUser playlistUser = new PlaylistUserImpl();
+//        playlistUser.createPlaylistUser(database,playlistName);
+//
+//        ContentValues values = new ContentValues();
+//        values.put(ContractPlaylistControl.PLAYLIST_NAME,playlistName);
+//        values.put(ContractPlaylistControl.PLAYLIST_COUNT_SONGS,0);
+//
+//        database.insert(ContractPlaylistControl.PLAYLIST_TABLE_NAME, null,values);
+//
+//        loadPlaylists(context);
+    }
+
+    @Override
+    public void deletePlaylist(Context context, String playlistName, int playlistId) {
         SQLHelper helper = new SQLHelper(context);
 
         PlaylistUser playlistUser = new PlaylistUserImpl();
-        playlistUser.createPlaylistUser(helper.getWritableDatabase(),playlistName);
+        playlistUser.deletePlaylistUser(helper.getWritableDatabase(),playlistName);
 
-        ContentValues values = new ContentValues();
-        values.put(ContractPlaylistControl.PLAYLIST_NAME,playlistName);
-        values.put(ContractPlaylistControl.PLAYLIST_COUNT_SONGS,0);
+        String selection ="_id=?";
+        String[] selectionArgs = new String[]{String.valueOf(playlistId)};
+        helper.getWritableDatabase().delete(ContractPlaylistControl.PLAYLIST_TABLE_NAME,selection,selectionArgs);
 
-        helper.getWritableDatabase().insert(ContractPlaylistControl.PLAYLIST_TABLE_NAME, null,values);
         loadPlaylists(context);
     }
 
@@ -79,6 +122,7 @@ public class PlaylistControlImpl implements PlaylistControl {
                     ));
                 }
                 liveData.postValue(playlists);
+                db.close();
             }
         }).start();
 

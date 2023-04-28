@@ -24,8 +24,13 @@ public class PagePlaylistsViewModel extends AndroidViewModel {
         return playlists.getPlaylists(getApplication());
     }
 
-    public void createPlaylist(String playlistName){
+    public boolean createPlaylist(String playlistName){
         PlaylistControl playlists = PlaylistControlImpl.getInstance();
-        playlists.createPlaylist(getApplication(),playlistName);
+        return playlists.createPlaylist(getApplication(),playlistName);
+    }
+
+    public void deletePlaylist(String playlistName, int playlistId){
+        PlaylistControl playlists = PlaylistControlImpl.getInstance();
+        playlists.deletePlaylist(getApplication(),playlistName,playlistId);
     }
 }

@@ -2,13 +2,23 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/container_playlist"
     android:layout_width="match_parent"
-
+    android:layout_margin="4dp"
     android:layout_height="150dp">
 
     <FrameLayout
-        android:background="@drawable/gradient_light"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:background="@color/purple_200" />
+
+    <ImageView
+        android:id="@+id/page_playlist_options"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/ic_more_vert"
+        android:backgroundTint="@color/text_color" />
 
     <TextView
         android:id="@+id/page_playlist_id"
@@ -55,7 +65,6 @@
             android:textColor="@color/text_color"
             android:textSize="11sp" />
     </LinearLayout>
-
 
 
 </RelativeLayout>

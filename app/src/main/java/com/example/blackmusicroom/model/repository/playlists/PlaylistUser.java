@@ -4,4 +4,5 @@ import android.database.sqlite.SQLiteDatabase;
 
 public interface PlaylistUser {
     void createPlaylistUser(SQLiteDatabase database, String tableName);
+    void deletePlaylistUser(SQLiteDatabase database, String tableName);
 }

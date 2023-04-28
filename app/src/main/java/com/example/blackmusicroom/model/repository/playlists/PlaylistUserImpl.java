@@ -26,4 +26,10 @@ public class PlaylistUserImpl implements PlaylistUser{
                 + U_SIZE + " TEXT NOT NULL);";
         database.execSQL(CREATE_PLAYLIST_USER);
     }
+
+    @Override
+    public void deletePlaylistUser(SQLiteDatabase database, String tableName) {
+        String DELETE_PLAYLIST_USER = "DROP TABLE IF EXISTS " + tableName;
+        database.execSQL(DELETE_PLAYLIST_USER);
+    }
 }
