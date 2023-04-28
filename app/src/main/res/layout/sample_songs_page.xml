@@ -10,7 +10,7 @@
         android:id="@+id/page_songs_poster"
         android:layout_width="60dp"
         android:layout_height="60dp"
-        android:background="@color/purple_200"
+        android:background="@color/color_shape"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

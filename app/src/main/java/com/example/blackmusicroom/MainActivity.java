@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.example.blackmusicroom.model.repository.AllSongsDB;
 import com.example.blackmusicroom.model.repository.AllSongsDBImpl;
+import com.example.blackmusicroom.view.screen.BottomPlayerFragment;
 import com.example.blackmusicroom.view.screen.PagePlayerFragment;
 import com.example.blackmusicroom.view.screen.PagePlaylistSongsFragment;
 import com.example.blackmusicroom.view.screen.PagePlaylistsFragment;
@@ -36,9 +37,11 @@ public class MainActivity extends FragmentActivity implements Navigator {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        viewPager2 = findViewById(R.id.view_pager_2);
+        viewPager2 = findViewById(R.id.main_activity_view_pager_2);
         adapter = new PagerFragmentAdapter(this);
         viewPager2.setAdapter(adapter);
+
+        displayBottomPlayer();
 
         Player player = PlayerImpl.getInstance();
         player.initPlayer();
@@ -48,6 +51,12 @@ public class MainActivity extends FragmentActivity implements Navigator {
         }
     }
 
+    private void displayBottomPlayer() {
+        BottomPlayerFragment bottomPlayer = new BottomPlayerFragment();
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.main_activity_bottom_player,bottomPlayer)
+                .commit();
+    }
 
 
     @Override

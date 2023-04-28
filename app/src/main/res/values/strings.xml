@@ -4,4 +4,7 @@
     <string name="sample_example_artist">LauraFabian</string>
     <string name="example_name_playlist">BlackMusic</string>
     <string name="new_player">New</string>
+    <string name="not_found">Not found</string>
+    <string name="example_name_song">You Broke My Heart My Love</string>
+    <string name="example_name_artist">Lara Fabian</string>
 </resources>
