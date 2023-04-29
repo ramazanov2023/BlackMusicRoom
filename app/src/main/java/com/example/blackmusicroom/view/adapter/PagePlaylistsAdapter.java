@@ -14,7 +14,10 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.blackmusicroom.Navigator;
+import com.example.blackmusicroom.NavigatorImpl;
 import com.example.blackmusicroom.R;
+import com.example.blackmusicroom.UserActions;
 import com.example.blackmusicroom.data.Playlist;
 import com.example.blackmusicroom.viewmodel.PagePlaylistsViewModel;
 
@@ -23,17 +26,14 @@ import java.util.ArrayList;
 public class PagePlaylistsAdapter extends RecyclerView.Adapter<PagePlaylistsAdapter.Holder> {
     ArrayList<Playlist> playlists;
     Context context;
-    PlaylistOptions playlistOptions;
-
-    public interface PlaylistOptions{
-        void setOption(String playlistName,int playlistId);
-    }
+    UserActions userActions;
 
 
-    public PagePlaylistsAdapter(Context context, ArrayList<Playlist> playlists,PlaylistOptions playlistOptions) {
+
+    public PagePlaylistsAdapter(Context context, ArrayList<Playlist> playlists, UserActions userActions) {
         this.playlists = playlists;
         this.context = context;
-        this.playlistOptions = playlistOptions;
+        this.userActions = userActions;
     }
 
     @NonNull
@@ -70,8 +70,10 @@ public class PagePlaylistsAdapter extends RecyclerView.Adapter<PagePlaylistsAdap
 
         @Override
         public void onClick(View v) {
-            Playlist playlist = playlists.get(getAdapterPosition());
-            playlistOptions.setOption(playlist.plName,playlist.plId);
+//            Playlist playlist = playlists.get(getAdapterPosition());
+//            userActions.setAction(UserActions.DELETE_PLAYLIST,playlist.plName,playlist.plId);
+            Navigator navigator = NavigatorImpl.getInstance();
+            navigator.openPage(Navigator.PLAYLIST_SONGS_PAGE);
         }
     }
 }

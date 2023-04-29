@@ -1,5 +1,7 @@
 package com.example.blackmusicroom;
 
+import android.content.Context;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager2.widget.ViewPager2;
 
@@ -12,6 +14,8 @@ public interface Navigator {
     int PLAYER_PAGE = 4;
     int SETTINGS_PAGE = 5;
 
-    void setPage(int numPage);
+    void initNavigator(AppCompatActivity activity);
+    void openPage(int numPage);
+    void setViewPager(ViewPager2 viewPager2);
 
 }

@@ -1,6 +1,7 @@
 package com.example.blackmusicroom;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
@@ -25,7 +26,7 @@ import com.example.blackmusicroom.viewmodel.Player;
 import com.example.blackmusicroom.viewmodel.PlayerImpl;
 
 
-public class MainActivity extends FragmentActivity implements Navigator {
+public class MainActivity extends AppCompatActivity {
     ViewPager2 viewPager2;
     FragmentStateAdapter adapter;
 
@@ -35,6 +36,9 @@ public class MainActivity extends FragmentActivity implements Navigator {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+//        Navigator navigator = NavigatorImpl.getInstance();
+//        navigator.initNavigator(this);
 
         viewPager2 = findViewById(R.id.main_activity_view_pager_2);
         adapter = new PagerFragmentAdapter(this);
@@ -50,6 +54,21 @@ public class MainActivity extends FragmentActivity implements Navigator {
         }
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Navigator navigator = NavigatorImpl.getInstance();
+        navigator.initNavigator(this);
+        navigator.setViewPager(viewPager2);
+    }
+
+//    @Override
+//    protected void onStop() {
+//        super.onStop();
+//        Navigator navigator = NavigatorImpl.getInstance();
+//        navigator.setViewPager(null);
+//    }
+
     private void displayBottomPlayer() {
         BottomPlayerFragment bottomPlayer = new BottomPlayerFragment();
         getSupportFragmentManager().beginTransaction()
@@ -58,32 +77,6 @@ public class MainActivity extends FragmentActivity implements Navigator {
     }
 
 
-    @Override
-    public void setPage(int numPage) {
-        switch (numPage) {
-            case SONGS_PAGE:
-                viewPager2.setCurrentItem(SONGS_PAGE);
-                break;
-            case PLAYLISTS_PAGE:
-                viewPager2.setCurrentItem(PLAYLISTS_PAGE);
-                break;
-            case FILES_PAGE:
-                viewPager2.setCurrentItem(FILES_PAGE);
-                break;
-            case PLAYLIST_SONGS_PAGE:
-                Intent intent = new Intent(this, PagePlaylistSongsActivity.class);
-                startActivity(intent);
-                break;
-            case PLAYER_PAGE:
-                Intent intent2 = new Intent(this, PagePlayerActivity.class);
-                startActivity(intent2);
-                break;
-            case SETTINGS_PAGE:
-                Intent intent3 = new Intent(this, SettingsActivity.class);
-                startActivity(intent3);
-                break;
-        }
-    }
 
     private class PagerFragmentAdapter extends FragmentStateAdapter {
         public PagerFragmentAdapter(MainActivity mainActivity) {

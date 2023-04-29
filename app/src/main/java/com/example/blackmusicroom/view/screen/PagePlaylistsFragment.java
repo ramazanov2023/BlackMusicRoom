@@ -17,13 +17,14 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.blackmusicroom.R;
+import com.example.blackmusicroom.UserActions;
 import com.example.blackmusicroom.data.Playlist;
 import com.example.blackmusicroom.view.adapter.PagePlaylistsAdapter;
 import com.example.blackmusicroom.viewmodel.PagePlaylistsViewModel;
 
 import java.util.ArrayList;
 
-public class PagePlaylistsFragment extends Fragment implements PagePlaylistsAdapter.PlaylistOptions {
+public class PagePlaylistsFragment extends Fragment implements UserActions {
     RecyclerView recyclerView;
     EditText playlistName;
     ImageView createPlaylist;
@@ -42,7 +43,7 @@ public class PagePlaylistsFragment extends Fragment implements PagePlaylistsAdap
 
 
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
-        recyclerView.setAdapter(new PagePlaylistsAdapter(getActivity(), new ArrayList<>(), (PagePlaylistsAdapter.PlaylistOptions) PagePlaylistsFragment.this));
+        recyclerView.setAdapter(new PagePlaylistsAdapter(getActivity(), new ArrayList<>(), (UserActions) PagePlaylistsFragment.this));
 
 
         PagePlaylistsViewModel viewModel = ViewModelProviders.of(this).get(PagePlaylistsViewModel.class);
@@ -51,7 +52,7 @@ public class PagePlaylistsFragment extends Fragment implements PagePlaylistsAdap
             public void onChanged(ArrayList<Playlist> playlists) {
                 recyclerView.swapAdapter(new PagePlaylistsAdapter(getActivity(),
                         playlists,
-                        (PagePlaylistsAdapter.PlaylistOptions) PagePlaylistsFragment.this), true);
+                        (UserActions) PagePlaylistsFragment.this), true);
             }
         });
 
@@ -69,7 +70,7 @@ public class PagePlaylistsFragment extends Fragment implements PagePlaylistsAdap
     }
 
     @Override
-    public void setOption(String playlistName, int playlistId) {
+    public void setAction(int action, String playlistName, int playlistId) {
         PagePlaylistsViewModel viewModel = ViewModelProviders.of(this).get(PagePlaylistsViewModel.class);
         viewModel.deletePlaylist(playlistName, playlistId);
     }

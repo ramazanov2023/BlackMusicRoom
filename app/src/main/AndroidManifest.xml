@@ -19,6 +19,12 @@
             android:name=".view.screen.SettingsActivity"
             android:exported="false" />
         <activity
+            android:name=".view.screen.PagePlaylistSongsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.screen.PagePlayerActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
