@@ -14,11 +14,10 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.widget.Toast;
 
-import com.example.blackmusicroom.model.repository.AllSongsDB;
-import com.example.blackmusicroom.model.repository.AllSongsDBImpl;
 import com.example.blackmusicroom.view.screen.BottomPlayerFragment;
-import com.example.blackmusicroom.view.screen.PagePlayerFragment;
-import com.example.blackmusicroom.view.screen.PagePlaylistSongsFragment;
+import com.example.blackmusicroom.view.screen.PageFilesFragment;
+import com.example.blackmusicroom.view.screen.PagePlayerActivity;
+import com.example.blackmusicroom.view.screen.PagePlaylistSongsActivity;
 import com.example.blackmusicroom.view.screen.PagePlaylistsFragment;
 import com.example.blackmusicroom.view.screen.SettingsActivity;
 import com.example.blackmusicroom.view.screen.PageSongsFragment;
@@ -68,15 +67,20 @@ public class MainActivity extends FragmentActivity implements Navigator {
             case PLAYLISTS_PAGE:
                 viewPager2.setCurrentItem(PLAYLISTS_PAGE);
                 break;
+            case FILES_PAGE:
+                viewPager2.setCurrentItem(FILES_PAGE);
+                break;
             case PLAYLIST_SONGS_PAGE:
-                viewPager2.setCurrentItem(PLAYLIST_SONGS_PAGE);
+                Intent intent = new Intent(this, PagePlaylistSongsActivity.class);
+                startActivity(intent);
                 break;
             case PLAYER_PAGE:
-                viewPager2.setCurrentItem(PLAYER_PAGE);
+                Intent intent2 = new Intent(this, PagePlayerActivity.class);
+                startActivity(intent2);
                 break;
             case SETTINGS_PAGE:
-                Intent intent = new Intent(this, SettingsActivity.class);
-                startActivity(intent);
+                Intent intent3 = new Intent(this, SettingsActivity.class);
+                startActivity(intent3);
                 break;
         }
     }
@@ -95,9 +99,7 @@ public class MainActivity extends FragmentActivity implements Navigator {
                 case 1:
                     return new PagePlaylistsFragment();
                 case 2:
-                    return new PagePlaylistSongsFragment();
-                case 3:
-                    return new PagePlayerFragment();
+                    return new PageFilesFragment();
             }
 
             return null;
@@ -105,7 +107,7 @@ public class MainActivity extends FragmentActivity implements Navigator {
 
         @Override
         public int getItemCount() {
-            return 4;
+            return 3;
         }
     }
 

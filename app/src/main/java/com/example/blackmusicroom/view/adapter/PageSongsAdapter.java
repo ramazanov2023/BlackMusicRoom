@@ -8,18 +8,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.lifecycle.Lifecycle;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import com.example.blackmusicroom.R;
 import com.example.blackmusicroom.data.Song;
-import com.example.blackmusicroom.view.screen.PagePlayerFragment;
-import com.example.blackmusicroom.view.screen.PagePlaylistSongsFragment;
-import com.example.blackmusicroom.view.screen.PagePlaylistsFragment;
-import com.example.blackmusicroom.view.screen.PageSongsFragment;
 
 import java.util.ArrayList;
 

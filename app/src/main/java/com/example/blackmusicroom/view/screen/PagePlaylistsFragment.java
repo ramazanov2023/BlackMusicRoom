@@ -49,7 +49,9 @@ public class PagePlaylistsFragment extends Fragment implements PagePlaylistsAdap
         viewModel.getPlaylists().observe(getViewLifecycleOwner(), new Observer<ArrayList<Playlist>>() {
             @Override
             public void onChanged(ArrayList<Playlist> playlists) {
-                recyclerView.swapAdapter(new PagePlaylistsAdapter(getActivity(), playlists, (PagePlaylistsAdapter.PlaylistOptions) PagePlaylistsFragment.this), true);
+                recyclerView.swapAdapter(new PagePlaylistsAdapter(getActivity(),
+                        playlists,
+                        (PagePlaylistsAdapter.PlaylistOptions) PagePlaylistsFragment.this), true);
             }
         });
 

@@ -6,6 +6,6 @@
     android:layout_height="match_parent"
     android:background="#F06292">
 
-    <include layout="@layout/buttons_pattern"/>
+<!--    <include layout="@layout/buttons_pattern"/>-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>
