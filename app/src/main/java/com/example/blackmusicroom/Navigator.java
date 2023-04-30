@@ -15,7 +15,9 @@ public interface Navigator {
     int SETTINGS_PAGE = 5;
 
     void initNavigator(AppCompatActivity activity);
+
     void openPage(int numPage);
+
     void setViewPager(ViewPager2 viewPager2);
 
 }
