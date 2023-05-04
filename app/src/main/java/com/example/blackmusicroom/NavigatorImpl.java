@@ -9,9 +9,12 @@ import androidx.lifecycle.LifecycleObserver;
 import androidx.lifecycle.OnLifecycleEvent;
 import androidx.viewpager2.widget.ViewPager2;
 
+import com.example.blackmusicroom.data.Song;
 import com.example.blackmusicroom.view.screen.PagePlayerActivity;
 import com.example.blackmusicroom.view.screen.PagePlaylistSongsActivity;
 import com.example.blackmusicroom.view.screen.SettingsActivity;
+
+import java.util.ArrayList;
 
 public class NavigatorImpl implements Navigator, LifecycleObserver {
 
@@ -49,7 +52,7 @@ public class NavigatorImpl implements Navigator, LifecycleObserver {
     }
 
     @Override
-    public void openPage(int numPage) {
+    public void openPage(int numPage,String playlistName) {
 
         if(viewPager2==null){
             return;
@@ -66,6 +69,7 @@ public class NavigatorImpl implements Navigator, LifecycleObserver {
                 break;
             case Navigator.PLAYLIST_SONGS_PAGE:
                 Intent intent = new Intent(activity, PagePlaylistSongsActivity.class);
+                intent.putExtra("playlistName",playlistName);
                 activity.startActivity(intent);
                 break;
             case Navigator.PLAYER_PAGE:

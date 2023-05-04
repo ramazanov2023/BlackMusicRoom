@@ -30,7 +30,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/button_new_player"
+        android:id="@+id/button_new_playlist"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -51,6 +51,6 @@
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:spanCount="2"
         tools:itemCount="5"
-        tools:listitem="@layout/sample_view_playlists" />
+        tools:listitem="@layout/sample_playlists_page" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

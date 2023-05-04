@@ -4,52 +4,52 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.blackmusicroom.Navigator;
 import com.example.blackmusicroom.NavigatorImpl;
 import com.example.blackmusicroom.Options;
 import com.example.blackmusicroom.R;
-import com.example.blackmusicroom.UserActions;
 import com.example.blackmusicroom.data.Playlist;
+import com.example.blackmusicroom.data.Song;
 
 import java.util.ArrayList;
 
-public class PagePlaylistsAdapter extends RecyclerView.Adapter<PagePlaylistsAdapter.Holder> {
-    ArrayList<Playlist> playlists;
+public class AddToPlaylistAdapter extends RecyclerView.Adapter<AddToPlaylistAdapter.Holder> {
     Context context;
-    Options userActions;
+    ArrayList<Playlist> playlists;
+    ArrayList<Song> song;
+    Options options;
 
-
-
-    public PagePlaylistsAdapter(Context context, ArrayList<Playlist> playlists, Options userActions) {
-        this.playlists = playlists;
+    public AddToPlaylistAdapter(Context context, ArrayList<Playlist> playlists, ArrayList<Song> song, Options options) {
         this.context = context;
-        this.userActions = userActions;
+        this.playlists = playlists;
+        this.song = song;
+        this.options = options;
     }
 
     @NonNull
     @Override
     public Holder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.sample_playlists_page,parent,false);
+        View view = LayoutInflater.from(context).inflate(R.layout.sample_playlists_list,parent,false);
         return new Holder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull Holder holder, int position) {
         Playlist playlist = playlists.get(position);
-        holder.id.setText(String.valueOf(playlist.plId));
-        holder.name.setText(playlist.plName);
+        holder.playlistName.setText(playlist.plName);
         holder.countSongs.setText(playlist.plCountSongs);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Navigator navigator = NavigatorImpl.getInstance();
-                navigator.openPage(Navigator.PLAYLIST_SONGS_PAGE,playlists.get(holder.getAdapterPosition()).plName);
+                Playlist pl = playlists.get(holder.getAdapterPosition());
+                options.setAction(Options.NO_ACTION,pl.plName,pl.plId,null);
             }
         });
     }
@@ -60,15 +60,11 @@ public class PagePlaylistsAdapter extends RecyclerView.Adapter<PagePlaylistsAdap
     }
 
     public class Holder extends RecyclerView.ViewHolder{
-        TextView name,countSongs,id;
-        ImageView options;
+        TextView playlistName, countSongs;
         public Holder(@NonNull View itemView) {
             super(itemView);
-            id = itemView.findViewById(R.id.page_playlist_id);
-            name = itemView.findViewById(R.id.page_playlist_name);
-            countSongs = itemView.findViewById(R.id.page_playlist_count_songs);
-            options = itemView.findViewById(R.id.page_playlist_options);
-
+            playlistName = itemView.findViewById(R.id.playlists_list_pl_name);
+            countSongs = itemView.findViewById(R.id.playlists_list_count_songs);
         }
     }
 }

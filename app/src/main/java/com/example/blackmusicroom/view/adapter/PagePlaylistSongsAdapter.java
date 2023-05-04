@@ -10,27 +10,29 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.blackmusicroom.Options;
 import com.example.blackmusicroom.R;
 import com.example.blackmusicroom.data.Song;
 
 import java.util.ArrayList;
 
-public class PageSongsAdapter extends RecyclerView.Adapter<PageSongsAdapter.Holder> {
+public class PagePlaylistSongsAdapter extends RecyclerView.Adapter<PagePlaylistSongsAdapter.Holder> {
     Context context;
     ArrayList<Song> songs;
-    ArrayList<Song> listSongs;
 
-    public PageSongsAdapter(Context context, ArrayList<Song> songs) {
+    public PagePlaylistSongsAdapter(Context context, ArrayList<Song> songs) {
         this.context = context;
         this.songs = songs;
-        listSongs = new ArrayList<>();
+    }
+
+    public void setSongs(ArrayList<Song> songs){
+        this.songs = songs;
+        notifyDataSetChanged();
     }
 
     @NonNull
     @Override
     public Holder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.sample_songs_page,parent,false);
+        View view = LayoutInflater.from(context).inflate(R.layout.sample_playlist_songs_page,parent,false);
         return new Holder(view);
     }
 
@@ -39,14 +41,6 @@ public class PageSongsAdapter extends RecyclerView.Adapter<PageSongsAdapter.Hold
         Song song = songs.get(position);
         holder.title.setText(song.songTitle);
         holder.artist.setText(song.songArtist);
-        holder.options.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                listSongs.add(song);
-                Options options = (Options) context;
-                options.setAction(Options.OPEN_SONG_OPTIONS,null,0,listSongs);
-            }
-        });
     }
 
     @Override
@@ -55,14 +49,13 @@ public class PageSongsAdapter extends RecyclerView.Adapter<PageSongsAdapter.Hold
     }
 
     public class Holder extends RecyclerView.ViewHolder{
-        ImageView poster,options;
+        ImageView poster;
         TextView title, artist;
         public Holder(@NonNull View itemView) {
             super(itemView);
-            poster = itemView.findViewById(R.id.page_songs_poster);
-            options = itemView.findViewById(R.id.page_songs_options);
-            title = itemView.findViewById(R.id.page_songs_title);
-            artist = itemView.findViewById(R.id.page_songs_artist);
+            poster = itemView.findViewById(R.id.page_playlist_songs_poster);
+            title = itemView.findViewById(R.id.page_playlist_songs_title);
+            artist = itemView.findViewById(R.id.page_playlist_songs_artist);
         }
     }
 }

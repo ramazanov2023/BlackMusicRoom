@@ -5,6 +5,7 @@ import android.app.Application;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 
 import com.example.blackmusicroom.data.Song;
 import com.example.blackmusicroom.model.repository.playlists.PlaylistControl;
@@ -12,16 +13,15 @@ import com.example.blackmusicroom.model.repository.playlists.PlaylistControlImpl
 
 import java.util.ArrayList;
 
-public class PageSongsViewModel extends AndroidViewModel {
+public class PagePlaylistSongsViewModel extends AndroidViewModel {
+    private MutableLiveData<ArrayList<Song>> liveData;
 
-    public PageSongsViewModel(@NonNull Application application) {
+    public PagePlaylistSongsViewModel(@NonNull Application application) {
         super(application);
     }
 
-    public LiveData<ArrayList<Song>> getSongs() {
+    public LiveData<ArrayList<Song>> getPlaylistSongs() {
         PlaylistControl playlistControl = PlaylistControlImpl.getInstance();
-        return playlistControl.getSongs(getApplication());
+        return playlistControl.getPlaylistSongs(getApplication());
     }
-
-
 }

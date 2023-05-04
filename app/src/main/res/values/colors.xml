@@ -16,4 +16,7 @@
     <color name="shape_bottom_player">#4A4A4A</color>
     <color name="text_bottom_player">#4A4A4A</color>
     <color name="color_shape">#FF94B8</color>
+
+    <color name="text_options_dark">#4A4A4A</color>
+    <color name="text_options_light">#737373</color>
 </resources>

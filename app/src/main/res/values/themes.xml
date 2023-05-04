@@ -11,6 +11,23 @@
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+
         <!-- Customize your theme here. -->
+    </style>
+    <style name="MusicRoomDialog" parent="Theme.Design.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/OptionsBackground</item>
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:navigationBarColor">@color/bg_bottom_player</item>
+    </style>
+    <style name="OptionsBackground" parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@android:color/transparent</item>
+    </style>
+
+    <style name="MyDialog" parent="Theme.AppCompat.Dialog">
+        <item name="android:colorBackground">@android:color/transparent</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+    </style>
+    <style name="MyDialog2" parent="Theme.MaterialComponents.Dialog">
+        <item name="dialogCornerRadius">10dp</item>
     </style>
 </resources>

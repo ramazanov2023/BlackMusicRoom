@@ -5,40 +5,38 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.Manifest;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
+import com.example.blackmusicroom.data.Song;
 import com.example.blackmusicroom.view.screen.BottomPlayerFragment;
+import com.example.blackmusicroom.view.screen.OptionsPlaylistFragment;
+import com.example.blackmusicroom.view.screen.OptionsSongFragment;
 import com.example.blackmusicroom.view.screen.PageFilesFragment;
-import com.example.blackmusicroom.view.screen.PagePlayerActivity;
-import com.example.blackmusicroom.view.screen.PagePlaylistSongsActivity;
 import com.example.blackmusicroom.view.screen.PagePlaylistsFragment;
-import com.example.blackmusicroom.view.screen.SettingsActivity;
+import com.example.blackmusicroom.view.screen.AddToPlaylistFragment;
 import com.example.blackmusicroom.view.screen.PageSongsFragment;
 import com.example.blackmusicroom.viewmodel.Player;
 import com.example.blackmusicroom.viewmodel.PlayerImpl;
 
+import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity {
+
+public class MainActivity extends AppCompatActivity implements Options{
     ViewPager2 viewPager2;
     FragmentStateAdapter adapter;
-
-
+    OptionsSongFragment optionsSong;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-//        Navigator navigator = NavigatorImpl.getInstance();
-//        navigator.initNavigator(this);
 
         viewPager2 = findViewById(R.id.main_activity_view_pager_2);
         adapter = new PagerFragmentAdapter(this);
@@ -49,9 +47,6 @@ public class MainActivity extends AppCompatActivity {
         Player player = PlayerImpl.getInstance();
         player.initPlayer();
 
-        if (!checkPermission()) {
-            requestPermission();
-        }
     }
 
     @Override
@@ -62,13 +57,6 @@ public class MainActivity extends AppCompatActivity {
         navigator.setViewPager(viewPager2);
     }
 
-//    @Override
-//    protected void onStop() {
-//        super.onStop();
-//        Navigator navigator = NavigatorImpl.getInstance();
-//        navigator.setViewPager(null);
-//    }
-
     private void displayBottomPlayer() {
         BottomPlayerFragment bottomPlayer = new BottomPlayerFragment();
         getSupportFragmentManager().beginTransaction()
@@ -76,6 +64,33 @@ public class MainActivity extends AppCompatActivity {
                 .commit();
     }
 
+    @Override
+    public void setAction(int action, String playlistName, int playlistId, ArrayList<Song> song) {
+//        ArrayList<Song> listSongs;
+        switch (action){
+            case OPEN_SONG_OPTIONS:
+                optionsSong = new OptionsSongFragment();
+                optionsSong.setSong(this,song);
+                optionsSong.show(getSupportFragmentManager(),"TAG");
+                break;
+            case OPEN_PLAYLIST_OPTIONS:
+                OptionsPlaylistFragment optionsPlaylist = new OptionsPlaylistFragment();
+                optionsPlaylist.show(getSupportFragmentManager(),"TAG");
+                break;
+            case OPEN_PLAYLIST_LIST:
+                AddToPlaylistFragment playlistsList = new AddToPlaylistFragment();
+                playlistsList.setSong(song);
+                if(optionsSong!=null) {
+                    optionsSong.dismiss();
+                    optionsSong = null;
+                }
+                playlistsList.show(getSupportFragmentManager(),"TAG");
+                break;
+            case ADD_SONG_TO_PLAYLIST:
+
+                break;
+        }
+    }
 
 
     private class PagerFragmentAdapter extends FragmentStateAdapter {
@@ -104,46 +119,4 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    //Strong reference(жесткая ссылка)
-//    StrongR strong = new StrongR();
-
-    //Weak reference(слабая ссылка)если object strong удлёт то эта ссылка будет удалена GC
-//    WeakReference weak = new WeakReference(strong);
-//    strong = null;
-
-    //Soft reference(мягкая ссылка) GC удалит ссылку когда заметит нехватку выделенной памяти
-//    SoftReference soft = new SoftReference(strong);
-//    strong = null;
-
-    //Phantom reference(фантомная ссылка)
-//    PhantomReference phantom = new PhantomReference(strong);
-//    strong = null;
-
-    public boolean checkPermission() {
-        int result = ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE);
-        if (result == PackageManager.PERMISSION_GRANTED) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    public void requestPermission() {
-        if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
-            Toast.makeText(this, "READ PERMISSION ID REQUIRED, PLEASE ALLOW FROM SETTINGS", Toast.LENGTH_SHORT).show();
-        } else {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 123);
-        }
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        switch (requestCode) {
-            case 123:
-                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    viewPager2.setAdapter(new PagerFragmentAdapter(this));
-                }
-        }
-    }
 }
