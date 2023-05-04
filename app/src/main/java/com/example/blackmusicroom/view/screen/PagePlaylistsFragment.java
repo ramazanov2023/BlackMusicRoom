@@ -22,6 +22,8 @@ import com.example.blackmusicroom.R;
 import com.example.blackmusicroom.UserActions;
 import com.example.blackmusicroom.data.Playlist;
 import com.example.blackmusicroom.data.Song;
+import com.example.blackmusicroom.model.repository.playlists.PlaylistControl;
+import com.example.blackmusicroom.model.repository.playlists.PlaylistControlImpl;
 import com.example.blackmusicroom.view.adapter.PagePlaylistsAdapter;
 import com.example.blackmusicroom.viewmodel.PagePlaylistsViewModel;
 
@@ -43,6 +45,7 @@ public class PagePlaylistsFragment extends Fragment implements Options {
         recyclerView = view.findViewById(R.id.page_playlists_recycler_view);
         playlistName = view.findViewById(R.id.enter_player_name);
         createPlaylist = view.findViewById(R.id.button_new_playlist);
+
 
 
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
@@ -77,6 +80,12 @@ public class PagePlaylistsFragment extends Fragment implements Options {
         });
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        PlaylistControl playlistControl = PlaylistControlImpl.getInstance();
+        playlistControl.loadPlaylists(getActivity());
+    }
 
     @Override
     public void setAction(int action, String playlistName, int playlistId, ArrayList<Song> song) {

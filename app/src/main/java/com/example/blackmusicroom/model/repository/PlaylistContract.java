@@ -41,4 +41,9 @@ public class PlaylistContract implements BaseColumns {
         String DELETE_PLAYLIST_USER = "DROP TABLE IF EXISTS " + tableName;
         database.execSQL(DELETE_PLAYLIST_USER);
     }
+
+    public static void countRows(SQLiteDatabase database, String tableName) {
+        String SELECT_COUNT_ROWS = "SELECT COUNT(*) FROM " + tableName;
+//        database.;
+    }
 }

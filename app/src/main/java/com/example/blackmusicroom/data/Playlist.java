@@ -4,9 +4,9 @@ public class Playlist {
 
     public int plId;
     public String plName;
-    public String plCountSongs;
+    public long plCountSongs;
 
-    public Playlist(int plId, String plName, String plCountSongs) {
+    public Playlist(int plId, String plName, long plCountSongs) {
         this.plId = plId;
         this.plName = plName;
         this.plCountSongs = plCountSongs;

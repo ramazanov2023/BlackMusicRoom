@@ -44,7 +44,7 @@ public class PagePlaylistsAdapter extends RecyclerView.Adapter<PagePlaylistsAdap
         Playlist playlist = playlists.get(position);
         holder.id.setText(String.valueOf(playlist.plId));
         holder.name.setText(playlist.plName);
-        holder.countSongs.setText(playlist.plCountSongs);
+        holder.countSongs.setText(String.valueOf(playlist.plCountSongs));
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -57,5 +57,7 @@ public class AddToPlaylistFragment extends DialogFragment implements Options{
     @Override
     public void setAction(int action, String playlistName, int playlistId, ArrayList<Song> song) {
         viewModel.addToPlaylist(playlistName,this.song);
+        ((Options) getActivity()).setAction(ADD_SONG_TO_PLAYLIST,null,0,null);
+
     }
 }

@@ -3,6 +3,7 @@ package com.example.blackmusicroom.model.repository.playlists;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.provider.MediaStore;
 import android.text.TextUtils;
@@ -74,6 +75,7 @@ public class PlaylistControlImpl implements PlaylistControl {
 
             ContentValues values = new ContentValues();
             values.put(PlaylistContract.PLAYLIST_CONTROL_NAME,playlistName);
+//            long count = DatabaseUtils.queryNumEntries(database,playlistName);
             values.put(PlaylistContract.PLAYLIST_CONTROL_COUNT_SONGS,0);
 
             database.insert(PlaylistContract.PLAYLIST_CONTROL_TABLE_NAME, null,values);
@@ -133,8 +135,8 @@ public class PlaylistControlImpl implements PlaylistControl {
         }
     }
 
-
-    private void loadPlaylists(Context context){
+    @Override
+    public void loadPlaylists(Context context){
         ArrayList<Playlist> playlists = new ArrayList<>();
         SQLHelper helper = new SQLHelper(context);
         SQLiteDatabase db = helper.getReadableDatabase();
@@ -145,7 +147,7 @@ public class PlaylistControlImpl implements PlaylistControl {
                 String[] projection = {
                         PlaylistContract.PLAYLIST_CONTROL_ID,
                         PlaylistContract.PLAYLIST_CONTROL_NAME,
-                        PlaylistContract.PLAYLIST_CONTROL_COUNT_SONGS
+//                        PlaylistContract.PLAYLIST_CONTROL_COUNT_SONGS
                 };
                 Cursor cursor = db.query(
                         PlaylistContract.PLAYLIST_CONTROL_TABLE_NAME,
@@ -156,11 +158,16 @@ public class PlaylistControlImpl implements PlaylistControl {
                         null,
                         null
                 );
+
+
                 while(cursor.moveToNext()){
+                    int id = cursor.getInt(0);
+                    String name = cursor.getString(1);
+                    long count = DatabaseUtils.queryNumEntries(db,name);
                     playlists.add(new Playlist(
-                            cursor.getInt(0),
-                            cursor.getString(1),
-                            cursor.getString(2)
+                            id,
+                            name,
+                            count
                     ));
                 }
                 liveDataPlaylists.postValue(playlists);

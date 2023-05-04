@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity implements Options{
     ViewPager2 viewPager2;
     FragmentStateAdapter adapter;
     OptionsSongFragment optionsSong;
+    AddToPlaylistFragment playlistsList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,7 +79,7 @@ public class MainActivity extends AppCompatActivity implements Options{
                 optionsPlaylist.show(getSupportFragmentManager(),"TAG");
                 break;
             case OPEN_PLAYLIST_LIST:
-                AddToPlaylistFragment playlistsList = new AddToPlaylistFragment();
+                playlistsList = new AddToPlaylistFragment();
                 playlistsList.setSong(song);
                 if(optionsSong!=null) {
                     optionsSong.dismiss();
@@ -87,7 +88,8 @@ public class MainActivity extends AppCompatActivity implements Options{
                 playlistsList.show(getSupportFragmentManager(),"TAG");
                 break;
             case ADD_SONG_TO_PLAYLIST:
-
+                playlistsList.dismiss();
+                playlistsList = null;
                 break;
         }
     }

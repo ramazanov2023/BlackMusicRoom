@@ -44,7 +44,7 @@ public class AddToPlaylistAdapter extends RecyclerView.Adapter<AddToPlaylistAdap
     public void onBindViewHolder(@NonNull Holder holder, int position) {
         Playlist playlist = playlists.get(position);
         holder.playlistName.setText(playlist.plName);
-        holder.countSongs.setText(playlist.plCountSongs);
+        holder.countSongs.setText(String.valueOf(playlist.plCountSongs));
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

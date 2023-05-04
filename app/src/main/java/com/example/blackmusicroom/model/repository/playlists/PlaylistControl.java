@@ -28,4 +28,6 @@ public interface PlaylistControl {
 
     void loadPlaylistSongs(Context context, String playlistName);
 
+    void loadPlaylists(Context context);
+
 }
