@@ -88,8 +88,7 @@ public class PagePlaylistsFragment extends Fragment implements Options {
     }
 
     @Override
-    public void setAction(int action, String playlistName, int playlistId, ArrayList<Song> song) {
-        PagePlaylistsViewModel viewModel = ViewModelProviders.of(this).get(PagePlaylistsViewModel.class);
-        viewModel.deletePlaylist(playlistName, playlistId);
+    public void setAction(int action) {
+
     }
 }

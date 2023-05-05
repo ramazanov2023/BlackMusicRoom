@@ -11,6 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.blackmusicroom.ActionData;
 import com.example.blackmusicroom.Options;
 import com.example.blackmusicroom.R;
 import com.example.blackmusicroom.data.Song;
@@ -44,12 +45,21 @@ public class PageSongsAdapter extends RecyclerView.Adapter<PageSongsAdapter.Hold
         holder.options.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                listSongs.add(song);
                 listSongs.add(songs.get(holder.getAdapterPosition()));
                 Log.e("searchList"," 1 - listSongs.size - " + listSongs.size());
+
+                ActionData.getInstance().addSong(listSongs);
+
                 Options options = (Options) context;
-                options.setAction(Options.OPEN_SONG_OPTIONS,null,0,listSongs);
+                options.setAction(Options.OPEN_SONG_OPTIONS);
                 listSongs = new ArrayList<>();
+            }
+        });
+
+        holder.options.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                return false;
             }
         });
     }

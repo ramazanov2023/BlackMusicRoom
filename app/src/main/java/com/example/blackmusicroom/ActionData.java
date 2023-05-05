@@ -1,5 +1,7 @@
 package com.example.blackmusicroom;
 
+import android.content.Context;
+
 import com.example.blackmusicroom.data.Song;
 import com.example.blackmusicroom.model.repository.playlists.PlaylistControl;
 import com.example.blackmusicroom.model.repository.playlists.PlaylistControlImpl;
@@ -8,6 +10,8 @@ import java.util.ArrayList;
 
 public class ActionData {
     private ArrayList<Song> song;
+    private String playlistName;
+    int playlistId;
     private static ActionData instance;
 
     public static ActionData getInstance(){
@@ -32,11 +36,24 @@ public class ActionData {
                     s.songSize
                     ));
         }
+        this.playlistName = playlistName;
     }
 
-    public void addToPlaylist(String playlistName){
+    public void addPlaylistData(String playlistName, int playlistId){
+        this.playlistName = playlistName;
+        this.playlistId = playlistId;
+    }
+
+    public void addToPlaylist(Context context, String playlistName){
         PlaylistControl playlistControl = PlaylistControlImpl.getInstance();
-        playlistControl.addSongToPlaylist(null,playlistName,song);
+        playlistControl.addSongToPlaylist(context,playlistName,song);
         song = null;
+    }
+
+    public void deleteFromPlaylist(Context context){
+        PlaylistControl playlistControl = PlaylistControlImpl.getInstance();
+        playlistControl.deleteSongFromPlaylist(context,playlistName,song);
+        song = null;
+//        playlistName = null;
     }
 }

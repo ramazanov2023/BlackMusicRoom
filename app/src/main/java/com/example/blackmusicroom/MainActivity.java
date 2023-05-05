@@ -2,17 +2,11 @@ package com.example.blackmusicroom;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
-import android.Manifest;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.util.Log;
-import android.widget.Toast;
 
 import com.example.blackmusicroom.data.Song;
 import com.example.blackmusicroom.view.screen.BottomPlayerFragment;
@@ -32,7 +26,7 @@ public class MainActivity extends AppCompatActivity implements Options{
     ViewPager2 viewPager2;
     FragmentStateAdapter adapter;
     OptionsSongFragment optionsSong;
-    AddToPlaylistFragment playlistsList;
+    AddToPlaylistFragment addToPlaylist;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,30 +60,33 @@ public class MainActivity extends AppCompatActivity implements Options{
     }
 
     @Override
-    public void setAction(int action, String playlistName, int playlistId, ArrayList<Song> song) {
+    public void setAction(int action) {
 //        ArrayList<Song> listSongs;
         switch (action){
             case OPEN_SONG_OPTIONS:
+//                ActionData.getInstance().addSong(song);
                 optionsSong = new OptionsSongFragment();
-                optionsSong.setSong(this,song);
+//                optionsSong.setSong(this,song);
                 optionsSong.show(getSupportFragmentManager(),"TAG");
                 break;
             case OPEN_PLAYLIST_OPTIONS:
                 OptionsPlaylistFragment optionsPlaylist = new OptionsPlaylistFragment();
                 optionsPlaylist.show(getSupportFragmentManager(),"TAG");
                 break;
-            case OPEN_PLAYLIST_LIST:
-                playlistsList = new AddToPlaylistFragment();
-                playlistsList.setSong(song);
+            case OPEN_ADD_TO_PLAYLIST:
+                addToPlaylist = new AddToPlaylistFragment();
+//                playlistsList.setSong(song);
                 if(optionsSong!=null) {
                     optionsSong.dismiss();
                     optionsSong = null;
                 }
-                playlistsList.show(getSupportFragmentManager(),"TAG");
+                addToPlaylist.show(getSupportFragmentManager(),"TAG");
                 break;
-            case ADD_SONG_TO_PLAYLIST:
-                playlistsList.dismiss();
-                playlistsList = null;
+            case CLOSE_ADD_TO_PLAYLIST:
+                if(addToPlaylist!=null) {
+                    addToPlaylist.dismiss();
+                    addToPlaylist = null;
+                }
                 break;
         }
     }

@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.blackmusicroom.ActionData;
 import com.example.blackmusicroom.Navigator;
 import com.example.blackmusicroom.NavigatorImpl;
 import com.example.blackmusicroom.Options;
@@ -26,11 +27,11 @@ public class AddToPlaylistAdapter extends RecyclerView.Adapter<AddToPlaylistAdap
     ArrayList<Song> song;
     Options options;
 
-    public AddToPlaylistAdapter(Context context, ArrayList<Playlist> playlists, ArrayList<Song> song, Options options) {
+    public AddToPlaylistAdapter(Context context, ArrayList<Playlist> playlists) {
         this.context = context;
         this.playlists = playlists;
         this.song = song;
-        this.options = options;
+//        this.options = options;
     }
 
     @NonNull
@@ -49,7 +50,9 @@ public class AddToPlaylistAdapter extends RecyclerView.Adapter<AddToPlaylistAdap
             @Override
             public void onClick(View v) {
                 Playlist pl = playlists.get(holder.getAdapterPosition());
-                options.setAction(Options.NO_ACTION,pl.plName,pl.plId,null);
+                ActionData.getInstance().addToPlaylist(context,pl.plName);
+                options = (Options) context;
+                options.setAction(Options.CLOSE_ADD_TO_PLAYLIST);
             }
         });
     }

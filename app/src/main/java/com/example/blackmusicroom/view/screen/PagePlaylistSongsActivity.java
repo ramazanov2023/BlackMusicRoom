@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.blackmusicroom.Navigator;
 import com.example.blackmusicroom.NavigatorImpl;
+import com.example.blackmusicroom.Options;
 import com.example.blackmusicroom.R;
 import com.example.blackmusicroom.UserActions;
 import com.example.blackmusicroom.data.Song;
@@ -23,8 +24,11 @@ import com.example.blackmusicroom.viewmodel.PagePlaylistSongsViewModel;
 
 import java.util.ArrayList;
 
-public class PagePlaylistSongsActivity extends AppCompatActivity{
+public class PagePlaylistSongsActivity extends AppCompatActivity implements Options {
     RecyclerView recyclerView;
+    OptionsPlaylistSongFragment optionsPlaylistSong;
+    AddToPlaylistFragment addToPlaylist;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,7 +37,7 @@ public class PagePlaylistSongsActivity extends AppCompatActivity{
         String playlistName = getIntent().getStringExtra("playlistName");
 
         PlaylistControl playlistControl = PlaylistControlImpl.getInstance();
-        playlistControl.loadPlaylistSongs(this,playlistName);
+        playlistControl.loadPlaylistSongs(this, playlistName);
 
         Navigator navigator = NavigatorImpl.getInstance();
         navigator.initNavigator(this);
@@ -54,4 +58,33 @@ public class PagePlaylistSongsActivity extends AppCompatActivity{
     }
 
 
+    @Override
+    public void setAction(int action) {
+        switch (action) {
+            case OPEN_PLAYLIST_SONG_OPTIONS:
+                optionsPlaylistSong = new OptionsPlaylistSongFragment();
+                optionsPlaylistSong.show(getSupportFragmentManager(), "TAG");
+                break;
+            case OPEN_ADD_TO_PLAYLIST:
+                addToPlaylist = new AddToPlaylistFragment();
+                if(optionsPlaylistSong!=null) {
+                    optionsPlaylistSong.dismiss();
+                    optionsPlaylistSong = null;
+                }
+                addToPlaylist.show(getSupportFragmentManager(),"TAG");
+                break;
+            case CLOSE_ADD_TO_PLAYLIST:
+                if(addToPlaylist!=null) {
+                    addToPlaylist.dismiss();
+                    addToPlaylist = null;
+                }
+                break;
+            case CLOSE_OPTIONS:
+                if(optionsPlaylistSong!=null) {
+                    optionsPlaylistSong.dismiss();
+                    optionsPlaylistSong = null;
+                }
+                break;
+        }
+    }
 }

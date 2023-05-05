@@ -10,11 +10,11 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.blackmusicroom.ActionData;
 import com.example.blackmusicroom.Navigator;
 import com.example.blackmusicroom.NavigatorImpl;
 import com.example.blackmusicroom.Options;
 import com.example.blackmusicroom.R;
-import com.example.blackmusicroom.UserActions;
 import com.example.blackmusicroom.data.Playlist;
 
 import java.util.ArrayList;
@@ -48,6 +48,8 @@ public class PagePlaylistsAdapter extends RecyclerView.Adapter<PagePlaylistsAdap
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Playlist cPlaylist = playlists.get(holder.getAdapterPosition());
+                ActionData.getInstance().addPlaylistData(cPlaylist.plName, cPlaylist.plId);
                 Navigator navigator = NavigatorImpl.getInstance();
                 navigator.openPage(Navigator.PLAYLIST_SONGS_PAGE,playlists.get(holder.getAdapterPosition()).plName);
             }

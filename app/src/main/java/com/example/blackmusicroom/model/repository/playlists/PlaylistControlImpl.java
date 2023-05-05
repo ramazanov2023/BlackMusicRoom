@@ -134,8 +134,11 @@ public class PlaylistControlImpl implements PlaylistControl {
         for(Song s:songs) {
             String selection = "_id=?";
             String[] selectionArgs = new String[]{String.valueOf(s.songId)};
+            Log.e("searchPL", " 1 - " + playlistName);
             database.delete(playlistName, selection, selectionArgs);
         }
+        loadPlaylistSongs(context, playlistName);
+        loadPlaylists(context);
     }
 
     @Override
@@ -337,7 +340,7 @@ public class PlaylistControlImpl implements PlaylistControl {
                 null
                 );
         cursor.moveToFirst();
-        return cursor.getInt(0)>0;
+        return cursor.getCount()>0;
     }
 
 }

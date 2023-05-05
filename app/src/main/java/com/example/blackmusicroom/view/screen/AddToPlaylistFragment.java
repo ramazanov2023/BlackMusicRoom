@@ -14,6 +14,7 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.blackmusicroom.ActionData;
 import com.example.blackmusicroom.Options;
 import com.example.blackmusicroom.R;
 import com.example.blackmusicroom.data.Playlist;
@@ -25,7 +26,7 @@ import com.example.blackmusicroom.viewmodel.AddToPlaylistViewModel;
 
 import java.util.ArrayList;
 
-public class AddToPlaylistFragment extends DialogFragment implements Options{
+public class AddToPlaylistFragment extends DialogFragment{
     RecyclerView recyclerView;
     ArrayList<Song> song;
     Options options;
@@ -41,14 +42,15 @@ public class AddToPlaylistFragment extends DialogFragment implements Options{
         recyclerView = view.findViewById(R.id.playlists_list_recycler);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        recyclerView.setAdapter(new AddToPlaylistAdapter(getActivity(),new ArrayList<>(),song,AddToPlaylistFragment.this));
+        recyclerView.setAdapter(new AddToPlaylistAdapter(getActivity(),new ArrayList<>()));
+
 
         viewModel = ViewModelProviders.of(this).get(AddToPlaylistViewModel.class);
         viewModel.getPlaylists().observe(getViewLifecycleOwner(), new Observer<ArrayList<Playlist>>() {
             @Override
             public void onChanged(ArrayList<Playlist> playlists) {
-                Log.e("searchList"," 5 - song.size - " + song.size());
-                recyclerView.swapAdapter(new AddToPlaylistAdapter(getActivity(),playlists,song, AddToPlaylistFragment.this),true);
+//                Log.e("searchList"," 5 - song.size - " + song.size());
+                recyclerView.swapAdapter(new AddToPlaylistAdapter(getActivity(),playlists),true);
             }
         });
 
@@ -56,17 +58,9 @@ public class AddToPlaylistFragment extends DialogFragment implements Options{
 
     public void setSong(ArrayList<Song> song) {
 
-        this.song = song;
+//        this.song = song;
         Log.e("searchList"," 4 - this.song.size - " + this.song.size());
     }
 
-    @Override
-    public void setAction(int action, String playlistName, int playlistId, ArrayList<Song> song) {
-//        viewModel.addToPlaylist(playlistName,this.song);
-        PlaylistControl playlistControl = PlaylistControlImpl.getInstance();
-        Log.e("searchList"," 6 - this.song.size - " + this.song.size());
-        playlistControl.addSongToPlaylist(getActivity(),playlistName,this.song);
-        ((Options) getActivity()).setAction(ADD_SONG_TO_PLAYLIST,null,0,null);
 
-    }
 }
