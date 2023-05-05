@@ -1,6 +1,7 @@
 package com.example.blackmusicroom.view.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +24,7 @@ public class PageSongsAdapter extends RecyclerView.Adapter<PageSongsAdapter.Hold
 
     public PageSongsAdapter(Context context, ArrayList<Song> songs) {
         this.context = context;
+        Log.e("searchList"," 0 - songs.size - " + songs.size());
         this.songs = songs;
         listSongs = new ArrayList<>();
     }
@@ -42,9 +44,12 @@ public class PageSongsAdapter extends RecyclerView.Adapter<PageSongsAdapter.Hold
         holder.options.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listSongs.add(song);
+//                listSongs.add(song);
+                listSongs.add(songs.get(holder.getAdapterPosition()));
+                Log.e("searchList"," 1 - listSongs.size - " + listSongs.size());
                 Options options = (Options) context;
                 options.setAction(Options.OPEN_SONG_OPTIONS,null,0,listSongs);
+                listSongs = new ArrayList<>();
             }
         });
     }

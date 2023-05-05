@@ -1,6 +1,7 @@
 package com.example.blackmusicroom.view.screen;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,8 @@ import com.example.blackmusicroom.Options;
 import com.example.blackmusicroom.R;
 import com.example.blackmusicroom.data.Playlist;
 import com.example.blackmusicroom.data.Song;
+import com.example.blackmusicroom.model.repository.playlists.PlaylistControl;
+import com.example.blackmusicroom.model.repository.playlists.PlaylistControlImpl;
 import com.example.blackmusicroom.view.adapter.AddToPlaylistAdapter;
 import com.example.blackmusicroom.viewmodel.AddToPlaylistViewModel;
 
@@ -44,6 +47,7 @@ public class AddToPlaylistFragment extends DialogFragment implements Options{
         viewModel.getPlaylists().observe(getViewLifecycleOwner(), new Observer<ArrayList<Playlist>>() {
             @Override
             public void onChanged(ArrayList<Playlist> playlists) {
+                Log.e("searchList"," 5 - song.size - " + song.size());
                 recyclerView.swapAdapter(new AddToPlaylistAdapter(getActivity(),playlists,song, AddToPlaylistFragment.this),true);
             }
         });
@@ -51,12 +55,17 @@ public class AddToPlaylistFragment extends DialogFragment implements Options{
     }
 
     public void setSong(ArrayList<Song> song) {
+
         this.song = song;
+        Log.e("searchList"," 4 - this.song.size - " + this.song.size());
     }
 
     @Override
     public void setAction(int action, String playlistName, int playlistId, ArrayList<Song> song) {
-        viewModel.addToPlaylist(playlistName,this.song);
+//        viewModel.addToPlaylist(playlistName,this.song);
+        PlaylistControl playlistControl = PlaylistControlImpl.getInstance();
+        Log.e("searchList"," 6 - this.song.size - " + this.song.size());
+        playlistControl.addSongToPlaylist(getActivity(),playlistName,this.song);
         ((Options) getActivity()).setAction(ADD_SONG_TO_PLAYLIST,null,0,null);
 
     }

@@ -83,8 +83,8 @@ public class PagePlaylistsFragment extends Fragment implements Options {
     @Override
     public void onResume() {
         super.onResume();
-        PlaylistControl playlistControl = PlaylistControlImpl.getInstance();
-        playlistControl.loadPlaylists(getActivity());
+//        PlaylistControl playlistControl = PlaylistControlImpl.getInstance();
+//        playlistControl.loadPlaylists(getActivity());
     }
 
     @Override

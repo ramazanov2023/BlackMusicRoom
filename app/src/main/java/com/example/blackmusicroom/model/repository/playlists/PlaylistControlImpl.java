@@ -14,7 +14,6 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.example.blackmusicroom.data.Playlist;
 import com.example.blackmusicroom.data.Song;
-import com.example.blackmusicroom.model.repository.MyCallback;
 import com.example.blackmusicroom.model.repository.PlaylistContract;
 import com.example.blackmusicroom.model.repository.SQLHelper;
 
@@ -66,7 +65,7 @@ public class PlaylistControlImpl implements PlaylistControl {
         SQLHelper helper = new SQLHelper(context);
         SQLiteDatabase database = helper.getWritableDatabase();
 
-        boolean tableAlreadyExists = validate(database,playlistName);
+        boolean tableAlreadyExists = validatePlaylist(database,playlistName);
 
         if(tableAlreadyExists){
             return true;
@@ -106,20 +105,24 @@ public class PlaylistControlImpl implements PlaylistControl {
 
         SQLiteDatabase database = helper.getReadableDatabase();
 
+        Log.e("searchList"," 7 - songs.size - " + songs.size());
         for(int i = 0; i< songs.size(); i++) {
             Song s = songs.get(i);
-            ContentValues values = new ContentValues();
-            values.put(PlaylistContract.ID, s.songId);
-            values.put(PlaylistContract.DATA, s.songPath);
-            values.put(PlaylistContract.TITLE, s.songTitle);
-            values.put(PlaylistContract.ARTIST, s.songArtist);
-            values.put(PlaylistContract.ALBUM, s.songAlbum);
-            values.put(PlaylistContract.DATE_ADDED, s.songDateAdded);
-            values.put(PlaylistContract.DURATION, s.songDuration);
-            values.put(PlaylistContract.SIZE, s.songSize);
-            Log.e("traking"," 7 - playlistName - " + playlistName);
-            database.insert(playlistName, null, values);
+            if(!validateSong(database,playlistName,s.songId)){
+                ContentValues values = new ContentValues();
+                values.put(PlaylistContract.ID, s.songId);
+                values.put(PlaylistContract.DATA, s.songPath);
+                values.put(PlaylistContract.TITLE, s.songTitle);
+                values.put(PlaylistContract.ARTIST, s.songArtist);
+                values.put(PlaylistContract.ALBUM, s.songAlbum);
+                values.put(PlaylistContract.DATE_ADDED, s.songDateAdded);
+                values.put(PlaylistContract.DURATION, s.songDuration);
+                values.put(PlaylistContract.SIZE, s.songSize);
+                Log.e("traking", " 7 - playlistName - " + playlistName);
+                database.insert(playlistName, null, values);
+            }
         }
+        loadPlaylists(context);
     }
 
     @Override
@@ -310,7 +313,7 @@ public class PlaylistControlImpl implements PlaylistControl {
 
     }
 
-    private boolean validate(SQLiteDatabase database, String playlistName) {
+    private boolean validatePlaylist(SQLiteDatabase database, String playlistName) {
         if(TextUtils.isEmpty(playlistName.trim())){
             return false;
         }
@@ -320,5 +323,21 @@ public class PlaylistControlImpl implements PlaylistControl {
         return cursor.getInt(0) > 0;
     }
 
+    private boolean validateSong(SQLiteDatabase database, String playlistName,int songId){
+        String[] projection = {PlaylistContract.ID};
+        String selection = "_id=?";
+        String[] selectionArgs = new String[]{String.valueOf(songId)};
+        Cursor cursor = database.query(
+                playlistName,
+                projection,
+                selection,
+                selectionArgs,
+                null,
+                null,
+                null
+                );
+        cursor.moveToFirst();
+        return cursor.getInt(0)>0;
+    }
 
 }

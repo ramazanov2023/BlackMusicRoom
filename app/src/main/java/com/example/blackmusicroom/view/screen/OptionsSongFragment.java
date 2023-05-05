@@ -1,6 +1,7 @@
 package com.example.blackmusicroom.view.screen;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,6 +40,7 @@ public class OptionsSongFragment extends BottomSheetDialogFragment {
         addToPlaylist.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.e("searchList"," 3 - song.size - " + song.size());
                 options.setAction(Options.OPEN_PLAYLIST_LIST,null,0,song);
             }
         });
@@ -47,6 +49,7 @@ public class OptionsSongFragment extends BottomSheetDialogFragment {
     }
     public void setSong(Options options, ArrayList<Song> song){
         this.song = song;
+        Log.e("searchList"," 2 - this.song.size - " + this.song.size());
         this.options = options;
     }
 
