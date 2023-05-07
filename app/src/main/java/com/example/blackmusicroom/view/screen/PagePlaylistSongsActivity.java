@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.blackmusicroom.ActionData;
 import com.example.blackmusicroom.Navigator;
 import com.example.blackmusicroom.NavigatorImpl;
 import com.example.blackmusicroom.Options;
@@ -34,10 +35,10 @@ public class PagePlaylistSongsActivity extends AppCompatActivity implements Opti
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_playlist_songs_page);
 
-        String playlistName = getIntent().getStringExtra("playlistName");
+//        String playlistName = getIntent().getStringExtra("playlistName");
 
         PlaylistControl playlistControl = PlaylistControlImpl.getInstance();
-        playlistControl.loadPlaylistSongs(this, playlistName);
+        playlistControl.loadPlaylistSongs(this, ActionData.getInstance().getPlaylistName());
 
         Navigator navigator = NavigatorImpl.getInstance();
         navigator.initNavigator(this);

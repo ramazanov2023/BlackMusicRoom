@@ -52,7 +52,7 @@ public class PagePlaylistSongsAdapter extends RecyclerView.Adapter<PagePlaylistS
             public void onClick(View v) {
                 Log.e("reaction", " 1 ");
                 listSongs.add(songs.get(holder.getAdapterPosition()));
-                ActionData.getInstance().addSong(listSongs);
+                ActionData.getInstance().addSong(holder.getAdapterPosition(), listSongs);
                 options = (Options) context;
                 options.setAction(Options.OPEN_PLAYLIST_SONG_OPTIONS);
                 listSongs = new ArrayList<>();

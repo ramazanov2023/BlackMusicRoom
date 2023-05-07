@@ -51,7 +51,7 @@ public class PagePlaylistsAdapter extends RecyclerView.Adapter<PagePlaylistsAdap
                 Playlist cPlaylist = playlists.get(holder.getAdapterPosition());
                 ActionData.getInstance().addPlaylistData(cPlaylist.plName, cPlaylist.plId);
                 Navigator navigator = NavigatorImpl.getInstance();
-                navigator.openPage(Navigator.PLAYLIST_SONGS_PAGE,playlists.get(holder.getAdapterPosition()).plName);
+                navigator.openPage(Navigator.PLAYLIST_SONGS_PAGE);
             }
         });
     }

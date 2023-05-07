@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="60dp"
+    android:id="@+id/bottom_player_open_player_page"
     android:background="@color/bg_bottom_player">
 
     <ImageView

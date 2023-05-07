@@ -16,7 +16,7 @@ public interface Navigator {
 
     void initNavigator(AppCompatActivity activity);
 
-    void openPage(int numPage,String playlistName);
+    void openPage(int numPage);
 
     void setViewPager(ViewPager2 viewPager2);
 

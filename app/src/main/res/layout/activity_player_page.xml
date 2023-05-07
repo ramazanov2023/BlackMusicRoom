@@ -4,9 +4,218 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F06292"
+    android:background="@color/bg_bottom_player"
     tools:context=".view.screen.PagePlayerActivity">
 
-<!--    <include layout="@layout/buttons_pattern"/>-->
+    <!--    <include layout="@layout/buttons_pattern"/>-->
 
+    <!--    <ImageView-->
+    <!--        android:id="@+id/bg"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="match_parent"-->
+    <!--        android:scaleType="centerCrop"-->
+    <!--        android:src="@drawable/dgbs" />-->
+
+    <!--    <FrameLayout-->
+    <!--        android:id="@+id/dark_bg"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="match_parent"-->
+    <!--        android:background="#66000000" />-->
+
+    <!--    <FrameLayout-->
+    <!--        android:id="@+id/gradient_top"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="140dp"-->
+    <!--        android:background="@drawable/gradient_top"-->
+    <!--        app:layout_constraintTop_toTopOf="parent" />-->
+    <!--    <FrameLayout-->
+    <!--        android:id="@+id/gradient_bottom"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="200dp"-->
+    <!--        app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--        android:background="@drawable/gradient_bottom" />-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="14dp"
+        android:padding="16dp"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/ic_more_vert"
+            android:backgroundTint="@color/shape_bottom_player" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:background="@drawable/ic_expand_more"
+            android:backgroundTint="@color/shape_bottom_player" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:orientation="vertical"
+        android:padding="16dp"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/list"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:background="@drawable/ic_order_music"
+                android:backgroundTint="@color/shape_bottom_player" />
+
+            <ImageView
+                android:id="@+id/favorite"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:background="@drawable/ic_favorite_border"
+                android:backgroundTint="@color/shape_bottom_player" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_marginStart="80dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/name_song"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:ellipsize="marquee"
+                    android:gravity="center"
+                    android:marqueeRepeatLimit="marquee_forever"
+                    android:singleLine="true"
+                    android:text="Nentori My Love Is Gone Gone Buy Guy"
+                    android:textColor="@color/text_bottom_player"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/name_artist_player"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:gravity="center"
+                    android:lines="1"
+                    android:text="Muena Petersen"
+                    android:textColor="@color/text_bottom_player"
+                    android:textSize="14sp" />
+
+            </LinearLayout>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="140dp">
+
+            <SeekBar
+                android:id="@+id/seek_bar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true" />
+
+            <TextView
+                android:id="@+id/current_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/seek_bar"
+                android:layout_alignParentStart="true"
+                android:layout_margin="15dp"
+                android:text="0:00"
+                android:textColor="@color/text_bottom_player" />
+
+            <TextView
+                android:id="@+id/total_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/seek_bar"
+                android:layout_alignParentEnd="true"
+                android:layout_margin="15dp"
+                android:text="0:00"
+                android:textColor="@color/text_bottom_player" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/loop"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:background="@drawable/ic_repeat"
+                android:backgroundTint="@color/shape_bottom_player" />
+
+            <ImageView
+                android:id="@+id/random"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:background="@drawable/ic_shuffle"
+                android:backgroundTint="@color/shape_bottom_player" />
+
+
+            <ImageView
+                android:id="@+id/preview_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignRight="@+id/loop"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="-80dp"
+                android:background="@drawable/ic_skip_previous"
+                android:backgroundTint="@color/shape_bottom_player" />
+
+            <ImageView
+                android:id="@+id/next_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/random"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="-80dp"
+                android:background="@drawable/ic_skip_next"
+                android:backgroundTint="@color/shape_bottom_player" />
+        </RelativeLayout>
+
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/play_btn"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/ic_play_circle"
+        android:backgroundTint="@color/shape_bottom_player"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+    <!--    <FrameLayout-->
+    <!--        android:id="@+id/bottom"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="50dp"-->
+    <!--        app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--        android:background="@color/dark_white2" />-->
 </androidx.constraintlayout.widget.ConstraintLayout>

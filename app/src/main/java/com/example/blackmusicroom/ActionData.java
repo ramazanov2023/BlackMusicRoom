@@ -5,6 +5,8 @@ import android.content.Context;
 import com.example.blackmusicroom.data.Song;
 import com.example.blackmusicroom.model.repository.playlists.PlaylistControl;
 import com.example.blackmusicroom.model.repository.playlists.PlaylistControlImpl;
+import com.example.blackmusicroom.viewmodel.Player;
+import com.example.blackmusicroom.viewmodel.PlayerImpl;
 
 import java.util.ArrayList;
 
@@ -12,6 +14,7 @@ public class ActionData {
     private ArrayList<Song> song;
     private String playlistName;
     int playlistId;
+    int songId;
     private static ActionData instance;
 
     public static ActionData getInstance(){
@@ -21,7 +24,7 @@ public class ActionData {
         return instance;
     }
 
-    public void addSong(ArrayList<Song> song){
+    public void addSong(int songId, ArrayList<Song> song){
 //        this.song = song;
         this.song = new ArrayList<>();
         for (Song s:song){
@@ -36,12 +39,21 @@ public class ActionData {
                     s.songSize
                     ));
         }
-        this.playlistName = playlistName;
+        this.songId = songId;
     }
+
+//    public void playSong(){
+//        Player player = PlayerImpl.getInstance();
+//        player.play();
+//    }
 
     public void addPlaylistData(String playlistName, int playlistId){
         this.playlistName = playlistName;
         this.playlistId = playlistId;
+    }
+
+    public String getPlaylistName(){
+        return playlistName;
     }
 
     public void addToPlaylist(Context context, String playlistName){

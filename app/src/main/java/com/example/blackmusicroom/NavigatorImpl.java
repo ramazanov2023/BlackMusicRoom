@@ -45,7 +45,7 @@ public class NavigatorImpl implements Navigator, LifecycleObserver {
     }
 
     @Override
-    public void openPage(int numPage, String playlistName) {
+    public void openPage(int numPage) {
         if (viewPager2 == null) {
             return;
         }
@@ -61,7 +61,7 @@ public class NavigatorImpl implements Navigator, LifecycleObserver {
                 break;
             case Navigator.PLAYLIST_SONGS_PAGE:
                 Intent intent = new Intent(activity, PagePlaylistSongsActivity.class);
-                intent.putExtra("playlistName", playlistName);
+//                intent.putExtra("playlistName", playlistName);
                 activity.startActivity(intent);
                 break;
             case Navigator.PLAYER_PAGE:

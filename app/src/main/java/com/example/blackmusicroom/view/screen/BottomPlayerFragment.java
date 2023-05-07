@@ -7,11 +7,15 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
+import com.example.blackmusicroom.Navigator;
+import com.example.blackmusicroom.NavigatorImpl;
 import com.example.blackmusicroom.R;
 
 public class BottomPlayerFragment extends Fragment {
+    ConstraintLayout openPlayerPage;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -20,17 +24,17 @@ public class BottomPlayerFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        openPlayerPage = view.findViewById(R.id.bottom_player_open_player_page);
 
 
+        Navigator navigator = NavigatorImpl.getInstance();
 
-//        Navigator navigator =(Navigator) getActivity();
-//
-//        btnSongs.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                navigator.setPage(Navigator.SONGS_PAGE);
-//            }
-//        });
+        openPlayerPage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                navigator.openPage(Navigator.PLAYER_PAGE);
+            }
+        });
 
     }
 }
