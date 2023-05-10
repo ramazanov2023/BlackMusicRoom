@@ -50,6 +50,7 @@ public class PagePlaylistsAdapter extends RecyclerView.Adapter<PagePlaylistsAdap
             public void onClick(View v) {
                 Playlist cPlaylist = playlists.get(holder.getAdapterPosition());
                 ActionData.getInstance().addPlaylistData(cPlaylist.plName, cPlaylist.plId);
+                context.getSharedPreferences("musPlayer",Context.MODE_PRIVATE).edit().putString("playlistName", cPlaylist.plName).apply();
                 Navigator navigator = NavigatorImpl.getInstance();
                 navigator.openPage(Navigator.PLAYLIST_SONGS_PAGE);
             }

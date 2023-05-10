@@ -1,6 +1,9 @@
 package com.example.blackmusicroom.viewmodel;
 
+import android.content.Context;
 import android.media.MediaPlayer;
+
+import androidx.lifecycle.LiveData;
 
 import com.example.blackmusicroom.data.Song;
 
@@ -8,11 +11,13 @@ import java.util.ArrayList;
 
 public interface Player {
 
-    void initPlayer();
+    void initPlayer(Context context);
 
     void play(int songId, ArrayList<Song> playlist);
 
     void playCurrentSong();
+
+    LiveData<Song> getSong();
 
     void pause();
 

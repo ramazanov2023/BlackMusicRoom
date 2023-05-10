@@ -1,5 +1,6 @@
 package com.example.blackmusicroom.view.screen;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,6 +23,7 @@ import com.example.blackmusicroom.view.adapter.PagePlaylistSongsAdapter;
 import com.example.blackmusicroom.view.adapter.PagePlaylistsAdapter;
 import com.example.blackmusicroom.view.adapter.PageSongsAdapter;
 import com.example.blackmusicroom.viewmodel.PagePlaylistSongsViewModel;
+import com.example.blackmusicroom.viewmodel.PlayerImpl;
 
 import java.util.ArrayList;
 
@@ -56,6 +58,8 @@ public class PagePlaylistSongsActivity extends AppCompatActivity implements Opti
                         songs), true);
             }
         });
+
+        displayBottomPlayer();
     }
 
 
@@ -87,5 +91,22 @@ public class PagePlaylistSongsActivity extends AppCompatActivity implements Opti
                 }
                 break;
         }
+
+    }
+
+    private void displayBottomPlayer() {
+        BottomPlayerFragment bottomPlayer = new BottomPlayerFragment();
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.page_playlist_songs_bottom_player,bottomPlayer)
+                .commit();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        SharedPreferences.Editor preferences = getSharedPreferences("musPlayer",MODE_PRIVATE).edit();
+        preferences.putInt("songId", PlayerImpl.getInstance().getSongId());
+        preferences.putInt("playlistNum",ActionData.getInstance().playlistNum);
+        preferences.apply();
     }
 }

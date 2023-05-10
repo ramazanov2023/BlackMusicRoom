@@ -1,8 +1,14 @@
 package com.example.blackmusicroom.viewmodel;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.util.Log;
 
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
+
+import com.example.blackmusicroom.ActionData;
 import com.example.blackmusicroom.data.Song;
 
 import java.io.IOException;
@@ -12,20 +18,29 @@ public class PlayerImpl implements Player{
 
     private MediaPlayer player;
     private ArrayList<Song> playlist;
+    private String playlistName;
+    private int playlistNum;
     private static PlayerImpl instance;
     private int songId = 0;
+    private MutableLiveData liveData;
 
     public static PlayerImpl getInstance(){
         if(instance==null){
             instance = new PlayerImpl();
+
         }
         return instance;
     }
 
     @Override
-    public void initPlayer() {
+    public void initPlayer(Context context) {
         player = new MediaPlayer();
-//        player.setDataSource();
+        if(liveData==null){
+            liveData = new MutableLiveData();
+        }
+//        songId = context.getSharedPreferences("musPlayer", Context.MODE_PRIVATE).getInt("songId",0);
+//        liveData.setValue();
+
     }
 
     @Override
@@ -40,6 +55,7 @@ public class PlayerImpl implements Player{
 
 
         Song song = playlist.get(songId);
+
         try {
             player.setDataSource(song.songPath);
             player.prepare();
@@ -53,11 +69,21 @@ public class PlayerImpl implements Player{
                 nextSong();
             }
         });
+        liveData.setValue(song);
+        ActionData.getInstance().addSong(song);
     }
 
     @Override
     public void playCurrentSong() {
         player.start();
+    }
+
+    @Override
+    public LiveData<Song> getSong() {
+        if(liveData==null){
+            liveData = new MutableLiveData();
+        }
+        return liveData;
     }
 
     @Override
@@ -100,5 +126,25 @@ public class PlayerImpl implements Player{
             player.release();
             player = null;
         }
+    }
+
+    public void setPlaylist(ArrayList<Song> playlist, int songId){
+        this.playlist = playlist;
+        this.songId = songId;
+        liveData.setValue(playlist.get(songId));
+
+        player = new MediaPlayer();
+        try {
+            player.setDataSource(playlist.get(songId).songPath);
+            player.prepare();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+
+    public int getSongId(){
+        return songId;
     }
 }

@@ -7,33 +7,6 @@
     android:background="@color/bg_bottom_player"
     tools:context=".view.screen.PagePlayerActivity">
 
-    <!--    <include layout="@layout/buttons_pattern"/>-->
-
-    <!--    <ImageView-->
-    <!--        android:id="@+id/bg"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="match_parent"-->
-    <!--        android:scaleType="centerCrop"-->
-    <!--        android:src="@drawable/dgbs" />-->
-
-    <!--    <FrameLayout-->
-    <!--        android:id="@+id/dark_bg"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="match_parent"-->
-    <!--        android:background="#66000000" />-->
-
-    <!--    <FrameLayout-->
-    <!--        android:id="@+id/gradient_top"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="140dp"-->
-    <!--        android:background="@drawable/gradient_top"-->
-    <!--        app:layout_constraintTop_toTopOf="parent" />-->
-    <!--    <FrameLayout-->
-    <!--        android:id="@+id/gradient_bottom"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="200dp"-->
-    <!--        app:layout_constraintBottom_toBottomOf="parent"-->
-    <!--        android:background="@drawable/gradient_bottom" />-->
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -42,6 +15,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
+            android:id="@+id/page_player_options"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
@@ -95,7 +69,7 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/name_song"
+                    android:id="@+id/page_player_song_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
@@ -108,7 +82,7 @@
                     android:textSize="18sp" />
 
                 <TextView
-                    android:id="@+id/name_artist_player"
+                    android:id="@+id/page_player_artist"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"

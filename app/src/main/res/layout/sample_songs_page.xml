@@ -13,6 +13,7 @@
         android:background="@color/color_sample_bg"
         android:visibility="gone"
         android:layout_height="76dp"/>
+
     <FrameLayout
         android:id="@+id/page_songs_add_song"
         app:layout_constraintTop_toTopOf="parent"

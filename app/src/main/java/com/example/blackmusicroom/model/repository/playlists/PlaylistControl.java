@@ -15,6 +15,7 @@ public interface PlaylistControl {
     LiveData<ArrayList<Playlist>> getPlaylists(Context context);
 
     LiveData<ArrayList<Song>> getSongs(Context context);
+//    ArrayList<Song> getSongs(Context context);
 
     LiveData<ArrayList<Song>> getPlaylistSongs(Context context);
 
@@ -29,5 +30,9 @@ public interface PlaylistControl {
     void loadPlaylistSongs(Context context, String playlistName);
 
     void loadPlaylists(Context context);
+
+    void loadSongs(Context context);
+
+    LiveData<ArrayList<Song>> loadPlaylistToPlayer(int num, Context context, String playlistName);
 
 }

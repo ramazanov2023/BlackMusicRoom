@@ -31,6 +31,7 @@ public class PageSongsAdapter extends RecyclerView.Adapter<PageSongsAdapter.Hold
     int size = 0;
     int count = 0;
     int pos;
+    int songPlay ;
 
     public PageSongsAdapter(Context context, ArrayList<Song> songs) {
         this.context = context;
@@ -38,6 +39,7 @@ public class PageSongsAdapter extends RecyclerView.Adapter<PageSongsAdapter.Hold
         this.songs = songs;
         listSongs = new ArrayList<>();
         countSelect = new int[songs.size()];
+        songPlay = ActionData.getInstance().mediaSongId;
     }
 
     @NonNull
@@ -101,10 +103,21 @@ public class PageSongsAdapter extends RecyclerView.Adapter<PageSongsAdapter.Hold
                 }else{
                     Player player = PlayerImpl.getInstance();
                     player.play(pos,songs);
+                    songPlay = songs.get(pos).songId;
+                    notifyDataSetChanged();
+                    holder.title.setTextColor(context.getColor(R.color.color_shape));
+                    ActionData.getInstance().addPlaylistNum(0);
+                    ActionData.getInstance().addMediaSongId(songPlay);
                     Log.e("playing"," 1 " + pos);
                 }
             }
         });
+
+        if(songPlay==song.songId){
+            holder.title.setTextColor(context.getColor(R.color.color_shape));
+        }else{
+            holder.title.setTextColor(context.getColor(R.color.text_color));
+        }
 
         for(int i = 0; i<count; i++) {
             if (countSelect[i] == position) {

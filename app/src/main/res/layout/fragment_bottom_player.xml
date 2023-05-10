@@ -18,7 +18,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/bottom_player_song_name"
+        android:id="@+id/bottom_player_song_title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -42,8 +42,8 @@
         android:text="@string/example_name_artist"
         android:textColor="@color/text_bottom_player"
         android:textSize="11sp"
-        app:layout_constraintStart_toStartOf="@id/bottom_player_song_name"
-        app:layout_constraintTop_toBottomOf="@id/bottom_player_song_name" />
+        app:layout_constraintStart_toStartOf="@id/bottom_player_song_title"
+        app:layout_constraintTop_toBottomOf="@id/bottom_player_song_title" />
 
     <ImageView
         android:id="@+id/bottom_player_play"

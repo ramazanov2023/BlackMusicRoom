@@ -11,11 +11,14 @@ import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
 
 import com.example.blackmusicroom.data.Playlist;
 import com.example.blackmusicroom.data.Song;
+import com.example.blackmusicroom.model.repository.MyCallback;
 import com.example.blackmusicroom.model.repository.PlaylistContract;
 import com.example.blackmusicroom.model.repository.SQLHelper;
+import com.example.blackmusicroom.viewmodel.PlayerImpl;
 
 import java.util.ArrayList;
 
@@ -24,6 +27,7 @@ public class PlaylistControlImpl implements PlaylistControl {
     MutableLiveData<ArrayList<Playlist>> liveDataPlaylists;
     MutableLiveData<ArrayList<Song>> liveDataSongs;
     MutableLiveData<ArrayList<Song>> liveDataPlaylistSongs;
+    MutableLiveData<ArrayList<Song>> liveDataSavedPlaylist;
     static PlaylistControlImpl instance;
 
     public static PlaylistControlImpl getInstance(){
@@ -45,8 +49,9 @@ public class PlaylistControlImpl implements PlaylistControl {
     @Override
     public LiveData<ArrayList<Song>> getSongs(Context context) {
         if(liveDataSongs == null){
+            Log.e("trackData"," 1 - liveDataSongs = new MutableLiveData<>()");
             liveDataSongs = new MutableLiveData<>();
-            loadSongs(context);
+//            loadSongs(context);
         }
         return liveDataSongs;
     }
@@ -184,13 +189,13 @@ public class PlaylistControlImpl implements PlaylistControl {
 
     }
 
-    private void loadSongs(Context context){
+    @Override
+    public void loadSongs(Context context){
         ArrayList<Song> songs = new ArrayList<>();
 
         new Thread(new Runnable() {
             @Override
             public void run() {
-                Log.e("traking"," 2 - onChanged");
                 String sortOrder = null;
                 String[] projection = {
                         MediaStore.Audio.Media._ID,
@@ -254,14 +259,15 @@ public class PlaylistControlImpl implements PlaylistControl {
                             cursor.getString(7));
                     songs.add(singleSong);
                 }
-                Log.e("traking"," 4 - songs.add");
                liveDataSongs.postValue(songs);
+                Log.e("trackData"," 3 - liveDataSongs.postValue(songs)");
 //                myCallback.onLoad(songs);
             }
         }).start();
 
 
     }
+
 
     @Override
     public void loadPlaylistSongs(Context context, String playlistName){
@@ -271,7 +277,6 @@ public class PlaylistControlImpl implements PlaylistControl {
         SQLiteDatabase database = helper.getReadableDatabase();
 
         String sortOrder = null;
-//        boolean thread = true;
 
         new Thread(new Runnable() {
             @Override
@@ -308,10 +313,8 @@ public class PlaylistControlImpl implements PlaylistControl {
 
                 }
                 liveDataPlaylistSongs.postValue(playlistSongs);
-//                myCallback.onLoad(playlistSongs);
             }
         }).start();
-        Log.e("testThread", " 1  - thread.isAlive() ");
 
 
     }
@@ -342,5 +345,98 @@ public class PlaylistControlImpl implements PlaylistControl {
         cursor.moveToFirst();
         return cursor.getCount()>0;
     }
+
+    @Override
+    public LiveData<ArrayList<Song>> loadPlaylistToPlayer(int num, Context context, String playlistName){
+        liveDataSavedPlaylist = new MutableLiveData<>();
+
+        SQLHelper helper = new SQLHelper(context);
+        ArrayList<Song> playlistSongs = new ArrayList<>();
+
+        SQLiteDatabase database = helper.getReadableDatabase();
+
+        String sortOrder = null;
+        if (num == 0) {
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    String sortOrder = null;
+                    String[] projection = {
+                            MediaStore.Audio.Media._ID,
+                            MediaStore.Audio.Media.DATA,
+                            MediaStore.Audio.Media.TITLE,
+                            MediaStore.Audio.Media.ARTIST,
+                            MediaStore.Audio.Media.ALBUM,
+                            MediaStore.Audio.Media.DATE_ADDED,
+                            MediaStore.Audio.Media.DURATION,
+                            MediaStore.Audio.Media.SIZE
+                    };
+
+                    String selection = MediaStore.Audio.Media.IS_MUSIC + "!=0";
+
+                    Cursor cursor = context.getContentResolver().query(
+                            MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
+                            projection,
+                            selection,
+                            null,
+                            sortOrder);
+
+                    while (cursor.moveToNext()) {
+                        Song singleSong = new Song(
+                                cursor.getInt(0),
+                                cursor.getString(1),
+                                cursor.getString(2),
+                                cursor.getString(3),
+                                cursor.getString(4),
+                                cursor.getString(5),
+                                cursor.getString(6),
+                                cursor.getString(7));
+                        playlistSongs.add(singleSong);
+                    }
+                    liveDataSavedPlaylist.postValue(playlistSongs);
+                }
+            }).start();
+        } else {
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    String[] projection = {
+                            PlaylistContract.ID,
+                            PlaylistContract.DATA,
+                            PlaylistContract.TITLE,
+                            PlaylistContract.ARTIST,
+                            PlaylistContract.ALBUM,
+                            PlaylistContract.DATE_ADDED,
+                            PlaylistContract.DURATION,
+                            PlaylistContract.SIZE
+                    };
+                    Cursor cursor = database.query(
+                            playlistName,
+                            projection,
+                            null,
+                            null,
+                            null,
+                            null,
+                            sortOrder
+                    );
+                    while(cursor.moveToNext()){
+                        playlistSongs.add(new Song(
+                                cursor.getInt(0),
+                                cursor.getString(1),
+                                cursor.getString(2),
+                                cursor.getString(3),
+                                cursor.getString(4),
+                                cursor.getString(5),
+                                cursor.getString(6),
+                                cursor.getString(7)));
+                    }
+                    liveDataSavedPlaylist.postValue(playlistSongs);
+                }
+            }).start();
+        }
+        return liveDataSavedPlaylist;
+
+    }
+
 
 }
